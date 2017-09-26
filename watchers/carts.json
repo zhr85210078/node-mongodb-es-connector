@@ -1,0 +1,16 @@
+{
+    "collectionName": "carts",
+    "index": "mycarts",
+    "type": "carts",
+    "transformFunction": null,
+    "fetchExistingDocuments": true,
+    "priority": 0,
+    "findFilds": {
+        "cName": 1,
+        "cPrice": 1
+    },
+    "expandFilds":{
+        "cartTest1":"cartTest1",
+        "cartTest2":"cartTest2"
+    }
+}

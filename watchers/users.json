@@ -1,0 +1,12 @@
+{
+    "collectionName": "users",
+    "index": "myusers",
+    "type": "users",
+    "transformFunction": null,
+    "fetchExistingDocuments": true,
+    "priority": 0,
+    "findFilds": {
+        "name": 1,
+        "password": 1
+    }
+}
