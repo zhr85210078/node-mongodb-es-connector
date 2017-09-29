@@ -5,7 +5,7 @@ var MONGO_DATA_URL="mongodb://localhost:29031/myTest";
 // var MONGO_DATA_URL="mongodb://siteRootAdmin:pass1234@HKAPPUWV812:29031/vRiskBB4RawData?authSource=admin"; 
 
 var ELASTIC_SEARCH_URL="localhost:9200"; 
-var BATCH_COUNT = 5000; 
+var BATCH_COUNT = 1000; 
 
 process.env.DEBUG='*';
 process.env.MONGO_OPLOG_URL = MONGO_OPLOG_URL;

@@ -12,5 +12,6 @@
     "expandFilds":{
         "cartTest1":"cartTest1",
         "cartTest2":"cartTest2"
-    }
+    },
+    "attachment":true
 }
