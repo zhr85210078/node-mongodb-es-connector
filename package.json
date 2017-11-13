@@ -1,12 +1,12 @@
 {
   "name": "es-mongodb-sync",
-  "version": "1.0.0",
+  "version": "1.0.5",
   "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "horan",
+  "author": "zhr85210078",
   "license": "ISC",
   "dependencies": {
     "chai": "^4.1.2",
@@ -29,5 +29,9 @@
     "coveralls": "^2.11.12",
     "istanbul": "^0.4.5",
     "mocha": "^3.5.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zhr85210078/node-mongodb-es-connector.git"
   }
 }
