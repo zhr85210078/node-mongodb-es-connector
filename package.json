@@ -1,6 +1,6 @@
 {
   "name": "es-mongodb-sync",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "",
   "main": "app.js",
   "scripts": {
