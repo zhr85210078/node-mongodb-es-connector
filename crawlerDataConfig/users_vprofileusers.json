@@ -1,0 +1,28 @@
+{
+    "mongodb":{
+        "mongodb_collectionName": "Users",
+        "mongodb_filterQueryFilds":{
+            "DataType":"People"
+        },
+        "mongodb_searchReturnFilds": {
+            "LoSCode": 1,
+            "JobTitle": 1,
+            "Email":1,
+            "Password":1,
+            "UserName":1,
+            "DataType":1
+        },
+        "mongodb_defaultValueFilds":{
+            "userTest1":"vProfileUsers1111",
+            "userTest2":"vProfileUsers2222"
+        },
+        "mongodb_oplog_url":"mongodb://siteRootAdmin:pass1234@HKDBSDWV002:29031,HKDBSDWV002:29032,HKDBSDWV002:29033/local?authSource=admin&replicaSet=rs_ExceedNotes_DEV",
+        "mongodb_data_url":"mongodb://siteRootAdmin:pass1234@HKDBSDWV002:29031,HKDBSDWV002:29032,HKDBSDWV002:29033/vProfileUsersTest?authSource=admin&replicaSet=rs_ExceedNotes_DEV",
+        "mongodb_documentsinBatch":5000
+    },
+    "elasticsearch":{
+        "elasticsearch_index": "vprofileusers",
+        "elasticsearch_type": "users",
+        "elasticsearch_url":"http://localhost:9200"
+    }
+}

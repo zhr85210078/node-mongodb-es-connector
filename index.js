@@ -1,107 +1,60 @@
-var fs = require('fs');
-var path = require("path");
-var logger = require('./lib/util/logger.js');
-var ESMongoSync = require('./lib/main');
-var setConfig = function (MONGO_OPLOG_URL, MONGO_DATA_URL, ELASTIC_SEARCH_URL, BATCH_COUNT) {
-    process.env.DEBUG = '*';
-    process.env.MONGO_OPLOG_URL = MONGO_OPLOG_URL;
-    process.env.MONGO_DATA_URL = MONGO_DATA_URL;
-    process.env.ELASTIC_SEARCH_URL = ELASTIC_SEARCH_URL;
-    process.env.BATCH_COUNT = BATCH_COUNT;
-};
+// var path = require("path");
+// var _ = require('underscore');
+// var main=require('./lib/main');
+// var filePath = path.join(__dirname, 'crawlerDataConfig');
+// var getFileList = require('./lib/util/getFileList').readFileList(filePath, []);
+// var numCPUs = require('os').cpus().length;
 
-var start = function (filePath) {
-    var getFileList = require('./lib/util/getFileList').readFileList(filePath, []);
-    ESMongoSync.init(getFileList, null, null);
-    require('./lib/util/fsWatcher').fsWatcher(filePath, ESMongoSync, require('./lib/util/getFileList'));
-};
+// main.init(getFileList);
 
-var addSingleWatcher = function (filePath, collectionName, index, type,filter, findFilds, expandFilds) {
-    var flag = false;
-    try {
-        var watcher = {};
-        watcher.collectionName = collectionName;
-        watcher.index = index;
-        watcher.type = type;
-        watcher.transformFunction = null;
-        watcher.fetchExistingDocuments = true;
-        watcher.priority = 0;
-        watcher.filter=filter;
-        watcher.findFilds = findFilds;
-        watcher.expandFilds = expandFilds;
+// _.each(getFileList, function (jsonFileObj) {
+//     /*mongodb*/
+//     var mongodbDataUrl = jsonFileObj.mongodb.mongodb_data_url;
+//     var mongodbOplogUrl = jsonFileObj.mongodb.mongodb_oplog_url;
+//     var collectionName = jsonFileObj.mongodb.mongodb_collectionName;
+//     var filterFilds = jsonFileObj.mongodb.mongodb_filterFilds;
+//     var searchFilds = jsonFileObj.mongodb.mongodb_searchFilds;
+//     var defaultFilds = jsonFileObj.mongodb.mongodb_defaultFilds;
+//     /*elasticsearch*/
+//     var esIndex=jsonFileObj.elasticsearch.elasticsearch_index;
+//     var esType=jsonFileObj.elasticsearch.elasticsearch_type;
+//     var esUrl=jsonFileObj.elasticsearch.elasticsearch_url;
+//     main.startProcess(mongodbDataUrl,collectionName,filterFilds,searchFilds,defaultFilds,esIndex,esType,esUrl).then(function (result){
+//         console.log(result);
+//         return result;
+//     });
+//     // mongoPromise.getDataCount(mongoUrl, collectionName, filterFilds).then(function (result) {
+//     //     console.log(result);
+//     //     return result;
+//     // }).then(function (result) {
+//     //     if (result > 0) {
+//     //         return mongoPromise.getDataResult(mongoUrl, collectionName, filterFilds, searchFilds);
+//     //     }
+//     //     else {
+//     //         return [];
+//     //     }
+//     // }).then(function (result) {
+//     //     console.log(result);
+//     //     return result;
+//     // });
+// });
 
-        var file = path.join(filePath, collectionName + '.json');
-        fs.writeFileSync(file, JSON.stringify(watcher, null, '\t'));
-        flag = true;
-    }
-    catch (error) {
-        logger.error(error);
-    }
-    return flag;
-};
+// elasticsearchPromise.searchESindex("http://localhost:9200", "mydesign", {}).then(function (result) {
+//     console.log(result);
+//     return result;
+// });
 
-var updateSingleWatcher = function (filePath, collectionName, index, type,filter, findFilds, expandFilds) {
-    var flag = false;
-    try {
-        var watcher = {};
-        watcher.collectionName = collectionName;
-        watcher.index = index;
-        watcher.type = type;
-        watcher.transformFunction = null;
-        watcher.fetchExistingDocuments = true;
-        watcher.priority = 0;
-        watcher.filter=filter;
-        watcher.findFilds = findFilds;
-        watcher.expandFilds = expandFilds;
+//url,collectionName,filterFilds,searchFilds,pagesize,pageNum
 
-        var file = path.join(filePath, collectionName + '.json');
-        fs.writeFileSync(file, JSON.stringify(watcher, null, '\t'));
-        flag = true;
-    }
-    catch (error) {
-        logger.error(error);
-    }
-    return flag;
-};
-
-var deleteSingleWatcher = function (filePath, collectionName) {
-    var flag = false;
-    try {
-        var files = fs.readdirSync(filePath);
-        files.forEach(function (filename) {
-            if (filename == collectionName + '.json') {
-                fs.unlinkSync(path.join(filePath, filename));
-                flag = true;
-            }
-        });
-    }
-    catch (error) {
-        logger.error(error);
-    }
-    return flag;
-};
-
-var isExistWatcher = function (filePath, collectionName) {
-    var flag = false;
-    try {
-        var files = fs.readdirSync(filePath);
-        files.forEach(function (filename) {
-            if (filename == collectionName + '.json') {
-                flag = true;
-            }
-        });
-    }
-    catch (error) {
-        logger.error(error);
-    }
-    return flag;
-};
-
-module.exports = {
-    setConfig: setConfig,
-    start: start,
-    addSingleWatcher: addSingleWatcher,
-    updateSingleWatcher: updateSingleWatcher,
-    deleteSingleWatcher: deleteSingleWatcher,
-    isExistWatcher: isExistWatcher
-};
+// var mongoPromise = require('./lib/promise/mongoPromise');
+// var filterFilds={
+//     "name":"test1111"
+// };
+// var searchFilds={
+//     "name": 1,
+//     "password": 1
+// };
+// mongoPromise.getPageDataResult("mongodb://localhost:29031/myTest","users",filterFilds,searchFilds,5000,1).then(function (result) {
+//         console.log(result);
+//         return result;
+// });

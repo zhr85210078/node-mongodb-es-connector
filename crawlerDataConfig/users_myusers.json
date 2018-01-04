@@ -1,0 +1,24 @@
+{
+    "mongodb":{
+        "mongodb_collectionName": "users",
+        "mongodb_filterQueryFilds":{
+            "name":"test1111"
+        },
+        "mongodb_searchReturnFilds": {
+            "name": 1,
+            "password": 1
+        },
+        "mongodb_defaultValueFilds":{
+            "userTest1":"useraaa",
+            "userTest2":"userbbb333"
+        },
+        "mongodb_oplog_url":"mongodb://localhost:29031/local",
+        "mongodb_data_url":"mongodb://localhost:29031/myTest",
+        "mongodb_documentsinBatch":5000
+    },
+    "elasticsearch":{
+        "elasticsearch_index": "myusers",
+        "elasticsearch_type": "users",
+        "elasticsearch_url":"http://localhost:9200"
+    }
+}

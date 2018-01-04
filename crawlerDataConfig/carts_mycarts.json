@@ -1,0 +1,25 @@
+{
+    "mongodb":{
+        "mongodb_collectionName": "carts",
+        "mongodb_filterQueryFilds":{
+            "__v" : 0
+        },
+        "mongodb_searchReturnFilds": {
+            "cName": 1,
+            "cPrice": 1,
+            "cImgSrc": 1
+        },
+        "mongodb_defaultValueFilds":{
+            "cartTest1":"cartTest111",
+            "cartTest2":"cartTest222"
+        },
+        "mongodb_oplog_url":"mongodb://localhost:29031/local",
+        "mongodb_data_url":"mongodb://localhost:29031/myTest",
+        "mongodb_documentsinBatch":5000
+    },
+    "elasticsearch":{
+        "elasticsearch_index": "mycarts",
+        "elasticsearch_type": "carts",
+        "elasticsearch_url":"http://localhost:9200"
+    }
+}
