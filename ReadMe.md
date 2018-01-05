@@ -73,11 +73,11 @@ node app.js
 
 - **mongodbData**
 
-[![mongodb]]
+![mongodb]
 
 - **elasticsearch**
 
-[![elasticsearch]]
+![elasticsearch]
 
 ## Extra APIs
 
