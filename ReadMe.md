@@ -2,6 +2,10 @@
 
 ElasticSearch and MongoDB sync module for node
 
+## Nodejs version
+
+    v8.9.3
+
 ## What does it do
 
 node-mongodb-es-connector package keeps your mongoDB collections and elastic search cluster in sync. It does so by tailing the mongo oplog and replicate whatever crud operation into elastic search cluster without any overhead. Please note that a replica set is needed for the package to tail mongoDB.
