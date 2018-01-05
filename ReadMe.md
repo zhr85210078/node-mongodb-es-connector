@@ -12,6 +12,8 @@ node-mongodb-es-connector package keeps your mongoDB collections and elastic sea
 npm install es-mongodb-sync
 ```
 
+or Download from GitHub.
+
 ## Sample usage
 
 Create a file in the `crawlerDataConfig` folder,the Naming rules is `Mongodb_CollectionName`_`ElasticSearch_IndexName`.
@@ -67,6 +69,16 @@ For example:
 node app.js
 ```
 
+## Result
+
+- **mongodbData**
+
+[![mongodb]]
+
+- **elasticsearch**
+
+[![elasticsearch]]
+
 ## Extra APIs
 
 Next release.
@@ -74,3 +86,7 @@ Next release.
 ## License
 
 The MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
+
+[mongodb]:https://github.com/zhr85210078/node-mongodb-es-connector/blob/master/test/img/mongoDB.jpg "mongodb"
+
+[elasticsearch]:https://github.com/zhr85210078/node-mongodb-es-connector/blob/master/test/img/elasticsearch.jpg "elasticsearch"
