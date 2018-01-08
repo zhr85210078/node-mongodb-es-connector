@@ -1,15 +1,14 @@
 {
   "name": "es-mongodb-sync",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "zhr85210078",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
-    "chalk": "^2.3.0",
     "dot-object": "^1.7.0",
     "elasticsearch": "^14.0.0",
     "es6-promise": "^4.2.2",
