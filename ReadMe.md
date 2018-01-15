@@ -1,10 +1,20 @@
 # node-mongodb-es-connector
 
 ElasticSearch and MongoDB sync module for node
+![structure]
 
-## Nodejs version
+Supports one-to-one, one-to-many, many-to-one, and many-to-many relationships.
 
-    v8.9.3
+- **one-to-one** - one mongodb collection to one elasticsearch index
+- **one-to-many** - one mongodb collection to many elasticsearch indexs
+- **many-to-one** - many mongodb collections to one elasticsearch index
+- **many-to-many** - many mongodb collections to many elasticsearch indexs
+
+## my current version
+
+    elasticsearch：v5.6.0
+    mongodb: v3.2.10
+    Nodejs: v8.9.3
 
 ## What does it do
 
@@ -20,19 +30,30 @@ or Download from GitHub.
 
 ## Sample usage
 
-Create a file in the `crawlerDataConfig` folder,the Naming rules is `Mongodb_CollectionName`_`ElasticSearch_IndexName`.
+Create a file in the **crawlerDataConfig** folder,the Naming rules is `MongodbDataBase_MongodbCollectionName_ElasticSearchIndexName`.
 
 If you have more additional configuration in the `crawlerDataConfig` folder.
 
+The File directory structure
+
+`|--crawlerDataConfig`</br>
+&nbsp;&nbsp;`|--mongodbServers_port`</br>
+&nbsp;&nbsp;&nbsp;&nbsp;`|--elasticsearchServer_port`</br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`|--MongodbDataBase_MongodbCollectionName_ElasticSearchIndexName`
+
 For example:
 
-`carts_mycarts.json`
+`|--crawlerDataConfig`</br>
+&nbsp;&nbsp;`|--localhost_29031`</br>
+&nbsp;&nbsp;&nbsp;&nbsp;`|--localhost_9200`</br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`|--myTest_carts_mycarts.json`
 
 ```bash
 {
-    "mongodb":{
+    "mongodb": {
+        "mongodb_dataBase": "myTest",
         "mongodb_collectionName": "carts",
-        "mongodb_filterQueryFilds":{
+        "mongodb_filterQueryFilds": {
             "__v" : 0
         },
         "mongodb_searchReturnFilds": {
@@ -40,32 +61,54 @@ For example:
             "cPrice": 1,
             "cImgSrc": 1
         },
-        "mongodb_defaultValueFilds":{
-            "cartTest1":"cartTest111",
-            "cartTest2":"cartTest222"
+        "mongodb_defaultValueFilds": {
+            "cartTest1": "cartTest111",
+            "cartTest2": "cartTest222"
         },
-        "mongodb_oplog_url":"mongodb://localhost:29031/local",
-        "mongodb_data_url":"mongodb://localhost:29031/myTest",
-        "mongodb_documentsinBatch":5000
+        "mongodb_connection": {
+            "mongodb_servers": [
+                "localhost:29031"
+            ],
+            "mongodb_authentication": {
+                "userName": "mdAdmin",
+                "passWord": "mdPwd"
+            }
+        },
+        "mongodb_documentsinBatch": 5000
     },
-    "elasticsearch":{
+    "elasticsearch": {
         "elasticsearch_index": "mycarts",
         "elasticsearch_type": "carts",
-        "elasticsearch_url":"http://localhost:9200"
+        "esConnection": {
+            "elasticsearch_server": "http://localhost:9200",
+            "elasticsearch_httpAuth": {
+                "userName": "esAdmin",
+                "passWord": "esPwd"
+            }
+        }
     }
 }
 ```
 
+- **mongodb_dataBase** - MongoDB dataBase to watch.
 - **mongodb_collectionName** - MongoDB collection to watch.
 - **mongodb_filterQueryFilds** - MongoDB filterQuery,support simple filter.
 - **mongodb_searchReturnFilds** - MongoDB need to return to the field.
 - **mongodb_defaultValueFilds** - MongoDB expand field.(can default key and value).
-- **mongodb_oplog_url** - MongoDB database to tail from.
+- **mongodb_connection**
+  - **mongodb_servers** - MongoDB servers.
+  - **mongodb_authentication**
+    - **userName** - MongoDB connection userName.
+    - **passWord** - MongoDB connection passWord.
 - **mongodb_data_url** - MongoDB database pull data from.
 - **mongodb_documentsinBatch** - An integer that specifies number of documents to send to ElasticSearch in batches. (can be set to very high number.).
 - **elasticsearch_index** - ElasticSearch index where documents from watcher collection is saved.
 - **elasticsearch_type** - ElasticSearch type given to documents from watcher collection.
-- **elasticsearch_url** - URL to a running ElasticSearch cluster.
+- **esConnection**
+  - **elasticsearch_server** - URL to a running ElasticSearch cluster.
+  - **elasticsearch_httpAuth**
+    - **userName** - ElasticSearch connection userName.
+    - **passWord** - ElasticSearch connection passWord.
 
 ## Start up
 
@@ -91,6 +134,8 @@ Next release.
 
 The MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
 
-[mongodb]:https://github.com/zhr85210078/node-mongodb-es-connector/blob/master/test/img/mongoDB.jpg "mongodb"
+[structure]:./test/img/structure.jpg "structure"
 
-[elasticsearch]:https://github.com/zhr85210078/node-mongodb-es-connector/blob/master/test/img/elasticsearch.jpg "elasticsearch"
+[mongodb]:./test/img/mongoDB.jpg "mongodb"
+
+[elasticsearch]:./test/img/elasticsearch.jpg "elasticsearch"
