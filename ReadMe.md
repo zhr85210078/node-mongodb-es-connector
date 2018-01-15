@@ -39,7 +39,7 @@ The File directory structure
 `|--crawlerDataConfig`</br>
 &nbsp;&nbsp;`|--mongodbServers_port`</br>
 &nbsp;&nbsp;&nbsp;&nbsp;`|--elasticsearchServer_port`</br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`|--MongodbDataBase_MongodbCollectionName_ElasticSearchIndexName`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`|--MongodbDataBase_MongodbCollectionName_ElasticSearchIndexName.json`
 
 For example:
 
