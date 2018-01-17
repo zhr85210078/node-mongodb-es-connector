@@ -27,14 +27,19 @@ var addSingleWatcher = function (filePath, mongodbDataBase, collectionName, filt
         watcher.elasticsearch.elasticsearch_type = type;
         watcher.elasticsearch.esConnection = esConnection;
 
-        var firstMongodbServer=[];
-        firstMongodbServer.push(mongodbConection.mongodb_servers[0]);
-        var mongdbServerFolder = util.arrayto_String(firstMongodbServer);
-        var esServerFolder = esConnection.elasticsearch_server.replace("http://", "").replace(":", "_");
+        // var firstMongodbServer=[];
+        // firstMongodbServer.push(mongodbConection.mongodb_servers[0]);
+        // var mongdbServerFolder = util.arrayto_String(firstMongodbServer);
+        // var esServerFolder = esConnection.elasticsearch_server.replace("http://", "").replace(":", "_");
 
-        var fileFolder = path.join(filePath, mongdbServerFolder, esServerFolder);
-        util.mkdir(fileFolder);
-        var file = path.join(filePath, mongdbServerFolder, esServerFolder, mongodbDataBase + "_" + collectionName + "_" + index + '.json');
+        // var fileFolder = path.join(filePath, mongdbServerFolder, esServerFolder);
+        // util.mkdir(fileFolder);
+        // var file = path.join(filePath, mongdbServerFolder, esServerFolder, mongodbDataBase + "_" + collectionName + "_" + index + '.json');
+
+        var mongdbServer = util.arrayto_String(mongodbConection.mongodb_servers);
+        var esServer = esConnection.elasticsearch_server.replace("http://", "").replace(":", "_");
+        var file = path.join(filePath, mongdbServer + "_" + esServer + "_" + mongodbDataBase + "_" + collectionName + "_" + index + '.json');
+
         fs.writeFileSync(file, JSON.stringify(watcher, null, '\t'));
         flag = true;
     }
@@ -62,14 +67,19 @@ var updateSingleWatcher = function (filePath, mongodbDataBase, collectionName, f
         watcher.elasticsearch.elasticsearch_type = type;
         watcher.elasticsearch.esConnection = esConnection;
 
-        var firstMongodbServer=[];
-        firstMongodbServer.push(mongodbConection.mongodb_servers[0]);
-        var mongdbServerFolder = util.arrayto_String(firstMongodbServer);
-        var esServerFolder = esConnection.elasticsearch_server.replace("http://", "").replace(":", "_");
+        // var firstMongodbServer=[];
+        // firstMongodbServer.push(mongodbConection.mongodb_servers[0]);
+        // var mongdbServerFolder = util.arrayto_String(firstMongodbServer);
+        // var esServerFolder = esConnection.elasticsearch_server.replace("http://", "").replace(":", "_");
 
-        var fileFolder = path.join(filePath, mongdbServerFolder, esServerFolder);
-        util.mkdir(fileFolder);
-        var file = path.join(filePath, mongdbServerFolder, esServerFolder, mongodbDataBase + "_" + collectionName + "_" + index + '.json');
+        // var fileFolder = path.join(filePath, mongdbServerFolder, esServerFolder);
+        // util.mkdir(fileFolder);
+        // var file = path.join(filePath, mongdbServerFolder, esServerFolder, mongodbDataBase + "_" + collectionName + "_" + index + '.json');
+
+        var mongdbServer = util.arrayto_String(mongodbConection.mongodb_servers);
+        var esServer = esConnection.elasticsearch_server.replace("http://", "").replace(":", "_");
+        var file = path.join(filePath, mongdbServer + "_" + esServer + "_" + mongodbDataBase + "_" + collectionName + "_" + index + '.json');
+
         fs.writeFileSync(file, JSON.stringify(watcher, null, '\t'));
         flag = true;
     }
@@ -82,16 +92,19 @@ var updateSingleWatcher = function (filePath, mongodbDataBase, collectionName, f
 var deleteSingleWatcher = function (filePath, mongodbDataBase, collectionName, mongodbConection, index, esConnection) {
     var flag = false;
     try {
-        var firstMongodbServer=[];
-        firstMongodbServer.push(mongodbConection.mongodb_servers[0]);
-        var mongdbServerFolder = util.arrayto_String(firstMongodbServer);
-        var esServerFolder = esConnection.elasticsearch_server.replace("http://", "").replace(":", "_");
-        var fileFolder = path.join(filePath, mongdbServerFolder, esServerFolder);
+        // var firstMongodbServer=[];
+        // firstMongodbServer.push(mongodbConection.mongodb_servers[0]);
+        // var mongdbServerFolder = util.arrayto_String(firstMongodbServer);
+        // var esServerFolder = esConnection.elasticsearch_server.replace("http://", "").replace(":", "_");
+        // var fileFolder = path.join(filePath, mongdbServerFolder, esServerFolder);
 
-        var files = fs.readdirSync(fileFolder);
+        var mongdbServer = util.arrayto_String(mongodbConection.mongodb_servers);
+        var esServer = esConnection.elasticsearch_server.replace("http://", "").replace(":", "_");
+
+        var files = fs.readdirSync(filePath);
         files.forEach(function (filename) {
-            if (filename == mongodbDataBase + "_" + collectionName + "_" + index + '.json') {
-                fs.unlinkSync(path.join(fileFolder, filename));
+            if (filename == mongdbServer + "_" + esServer + "_" + mongodbDataBase + "_" + collectionName + "_" + index + '.json') {
+                fs.unlinkSync(path.join(filePath, filename));
                 flag = true;
             }
         });
@@ -105,15 +118,18 @@ var deleteSingleWatcher = function (filePath, mongodbDataBase, collectionName, m
 var isExistWatcher = function (filePath, mongodbDataBase, collectionName, mongodbConection, index, esConnection) {
     var flag = false;
     try {
-        var firstMongodbServer=[];
-        firstMongodbServer.push(mongodbConection.mongodb_servers[0]);
-        var mongdbServerFolder = util.arrayto_String(firstMongodbServer);
-        var esServerFolder = esConnection.elasticsearch_server.replace("http://", "").replace(":", "_");
-        var fileFolder = path.join(filePath, mongdbServerFolder, esServerFolder);
+        // var firstMongodbServer = [];
+        // firstMongodbServer.push(mongodbConection.mongodb_servers[0]);
+        // var mongdbServerFolder = util.arrayto_String(firstMongodbServer);
+        // var esServerFolder = esConnection.elasticsearch_server.replace("http://", "").replace(":", "_");
+        // var fileFolder = path.join(filePath, mongdbServerFolder, esServerFolder);
 
-        var files = fs.readdirSync(fileFolder);
+        var mongdbServer = util.arrayto_String(mongodbConection.mongodb_servers);
+        var esServer = esConnection.elasticsearch_server.replace("http://", "").replace(":", "_");
+
+        var files = fs.readdirSync(filePath);
         files.forEach(function (filename) {
-            if (filename == mongodbDataBase + "_" + collectionName + "_" + index + '.json') {
+            if (filename == mongdbServer + "_" + esServer + "_" + mongodbDataBase + "_" + collectionName + "_" + index + '.json') {
                 flag = true;
             }
         });

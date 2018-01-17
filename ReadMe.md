@@ -30,23 +30,13 @@ or Download from GitHub.
 
 ## Sample usage
 
-Create a file in the **crawlerDataConfig** folder,the Naming rules is `MongodbDataBase_MongodbCollectionName_ElasticSearchIndexName`.
+Create a file in the **crawlerDataConfig** folder,the Naming rules is `MongodbServers_port_ElasticsearchServer_port_MongodbDataBase_MongodbCollectionName_ElasticSearchIndexName.json`.
 
 If you have more additional configuration in the `crawlerDataConfig` folder.
 
-The File directory structure
-
-`|--crawlerDataConfig`</br>
-&nbsp;&nbsp;`|--mongodbServers_port`</br>
-&nbsp;&nbsp;&nbsp;&nbsp;`|--elasticsearchServer_port`</br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`|--MongodbDataBase_MongodbCollectionName_ElasticSearchIndexName.json`
-
 For example:
 
-`|--crawlerDataConfig`</br>
-&nbsp;&nbsp;`|--localhost_29031`</br>
-&nbsp;&nbsp;&nbsp;&nbsp;`|--localhost_9200`</br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`|--myTest_carts_mycarts.json`
+`localhost_29031_localhost_9200_myTest_carts_mycarts.json`
 
 ```bash
 {
