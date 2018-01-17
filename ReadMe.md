@@ -135,7 +135,7 @@ node app.js
 index.js
 
 - **Method**
-  - **start()** - must start up before all the API.
+  - **start()** - must start up before all the APIs.
   - **addSingleWatcher()** - add a config json.
   - **updateSingleWatcher()** - update a config json.
   - **deleteSingleWatcher()** - delete a config json.

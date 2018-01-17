@@ -27,7 +27,9 @@ var addSingleWatcher = function (filePath, mongodbDataBase, collectionName, filt
         watcher.elasticsearch.elasticsearch_type = type;
         watcher.elasticsearch.esConnection = esConnection;
 
-        var mongdbServerFolder = util.arrayto_String(mongodbConection.mongodb_servers);
+        var firstMongodbServer=[];
+        firstMongodbServer.push(mongodbConection.mongodb_servers[0]);
+        var mongdbServerFolder = util.arrayto_String(firstMongodbServer);
         var esServerFolder = esConnection.elasticsearch_server.replace("http://", "").replace(":", "_");
 
         var fileFolder = path.join(filePath, mongdbServerFolder, esServerFolder);
@@ -60,7 +62,9 @@ var updateSingleWatcher = function (filePath, mongodbDataBase, collectionName, f
         watcher.elasticsearch.elasticsearch_type = type;
         watcher.elasticsearch.esConnection = esConnection;
 
-        var mongdbServerFolder = util.arrayto_String(mongodbConection.mongodb_servers);
+        var firstMongodbServer=[];
+        firstMongodbServer.push(mongodbConection.mongodb_servers[0]);
+        var mongdbServerFolder = util.arrayto_String(firstMongodbServer);
         var esServerFolder = esConnection.elasticsearch_server.replace("http://", "").replace(":", "_");
 
         var fileFolder = path.join(filePath, mongdbServerFolder, esServerFolder);
@@ -78,7 +82,9 @@ var updateSingleWatcher = function (filePath, mongodbDataBase, collectionName, f
 var deleteSingleWatcher = function (filePath, mongodbDataBase, collectionName, mongodbConection, index, esConnection) {
     var flag = false;
     try {
-        var mongdbServerFolder = util.arrayto_String(mongodbConection.mongodb_servers);
+        var firstMongodbServer=[];
+        firstMongodbServer.push(mongodbConection.mongodb_servers[0]);
+        var mongdbServerFolder = util.arrayto_String(firstMongodbServer);
         var esServerFolder = esConnection.elasticsearch_server.replace("http://", "").replace(":", "_");
         var fileFolder = path.join(filePath, mongdbServerFolder, esServerFolder);
 
@@ -99,7 +105,9 @@ var deleteSingleWatcher = function (filePath, mongodbDataBase, collectionName, m
 var isExistWatcher = function (filePath, mongodbDataBase, collectionName, mongodbConection, index, esConnection) {
     var flag = false;
     try {
-        var mongdbServerFolder = util.arrayto_String(mongodbConection.mongodb_servers);
+        var firstMongodbServer=[];
+        firstMongodbServer.push(mongodbConection.mongodb_servers[0]);
+        var mongdbServerFolder = util.arrayto_String(firstMongodbServer);
         var esServerFolder = esConnection.elasticsearch_server.replace("http://", "").replace(":", "_");
         var fileFolder = path.join(filePath, mongdbServerFolder, esServerFolder);
 
