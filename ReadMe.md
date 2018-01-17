@@ -71,7 +71,9 @@ For example:
             ],
             "mongodb_authentication": {
                 "userName": "mdAdmin",
-                "passWord": "mdPwd"
+                "passWord": "mdPwd",
+                "authSource":"admin",
+                "replicaSet":"myReplicaSet"
             }
         },
         "mongodb_documentsinBatch": 5000
@@ -92,21 +94,23 @@ For example:
 
 - **mongodb_dataBase** - MongoDB dataBase to watch.
 - **mongodb_collectionName** - MongoDB collection to watch.
-- **mongodb_filterQueryFilds** - MongoDB filterQuery,support simple filter.
-- **mongodb_searchReturnFilds** - MongoDB need to return to the field.
-- **mongodb_defaultValueFilds** - MongoDB expand field.(can default key and value).
+- **mongodb_filterQueryFilds** - MongoDB filterQuery,support simple filter.(Default value is `null`)
+- **mongodb_searchReturnFilds** - MongoDB need to return to the field.(Default value is `null`)
+- **mongodb_defaultValueFilds** - MongoDB expand field.(can default key and value).(Default value is `null`)
 - **mongodb_connection**
-  - **mongodb_servers** - MongoDB servers.
-  - **mongodb_authentication**
+  - **mongodb_servers** - MongoDB servers.(Array)
+  - **mongodb_authentication** - If you do not need to verify the default value is `null`.
     - **userName** - MongoDB connection userName.
     - **passWord** - MongoDB connection passWord.
+    - **authSource** - MongoDB user authentication.
+    - **replicaSet** - MongoDB replicaSet name.
 - **mongodb_data_url** - MongoDB database pull data from.
 - **mongodb_documentsinBatch** - An integer that specifies number of documents to send to ElasticSearch in batches. (can be set to very high number.).
 - **elasticsearch_index** - ElasticSearch index where documents from watcher collection is saved.
 - **elasticsearch_type** - ElasticSearch type given to documents from watcher collection.
 - **esConnection**
   - **elasticsearch_server** - URL to a running ElasticSearch cluster.
-  - **elasticsearch_httpAuth**
+  - **elasticsearch_httpAuth** - If you do not need to verify the default value is `null`.
     - **userName** - ElasticSearch connection userName.
     - **passWord** - ElasticSearch connection passWord.
 
@@ -128,7 +132,14 @@ node app.js
 
 ## Extra APIs
 
-Next release.
+index.js
+
+- **Method**
+  - **start()** - must start up before all the API.
+  - **addSingleWatcher()** - add a config json.
+  - **updateSingleWatcher()** - update a config json.
+  - **deleteSingleWatcher()** - delete a config json.
+  - **isExistWatcher()** - check out this config json exist.
 
 ## License
 
