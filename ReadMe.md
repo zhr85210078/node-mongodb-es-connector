@@ -26,7 +26,7 @@ node-mongodb-es-connector package keeps your mongoDB collections and elastic sea
 npm install es-mongodb-sync
 ```
 
-or Download from GitHub.
+or [Download](https://github.com/zhr85210078/node-mongodb-es-connector/tree/master) from GitHub.
 
 ## Sample usage
 
@@ -94,7 +94,6 @@ For example:
     - **passWord** - MongoDB connection passWord.
     - **authSource** - MongoDB user authentication.
     - **replicaSet** - MongoDB replicaSet name.
-- **mongodb_data_url** - MongoDB database pull data from.
 - **mongodb_documentsinBatch** - An integer that specifies number of documents to send to ElasticSearch in batches. (can be set to very high number.).
 - **elasticsearch_index** - ElasticSearch index where documents from watcher collection is saved.
 - **elasticsearch_type** - ElasticSearch type given to documents from watcher collection.
@@ -130,6 +129,8 @@ index.js
   - **updateSingleWatcher()** - update a config json.
   - **deleteSingleWatcher()** - delete a config json.
   - **isExistWatcher()** - check out this config json exist.
+
+Chinese Documentation - [中文文档](./README.zh-CN.md)
 
 ## License
 
