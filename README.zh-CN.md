@@ -133,6 +133,15 @@ index.js
 
 英文文档 - [English Documentation](./ReadMe.md)
 
+## 更新日志
+
+- **v1.1.12** - 更新promise插件并且在当前项目中使用bluebird插件,支持超过1000条索引的实时数据同步,使用promise的消息队列.
+
+## 待开发
+
+- **支持elasticsearch的管道聚合函数**
+- **支持同步附件信息**
+
 ## License
 
 The MIT License (MIT). Please see [LICENSE](LICENSE) for more information.

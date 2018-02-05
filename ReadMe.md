@@ -12,7 +12,7 @@ Supports one-to-one, one-to-many, many-to-one, and many-to-many relationships.
 
 ## my current version
 
-    elasticsearch：v5.6.0
+    elasticsearch：v6.1.2
     mongodb: v3.2.10
     Nodejs: v8.9.3
 
@@ -131,6 +131,15 @@ index.js
   - **isExistWatcher()** - check out this config json exist.
 
 Chinese Documentation - [中文文档](./README.zh-CN.md)
+
+## ChangeLog
+
+- **v1.1.12** - update promise plugin,and referencing the Bluebird plugin in the project.Real-time synchronization in support of more than 1000 indexes.Message queues using promise.
+
+## To be developed
+
+- **support elasticsearch pipeline aggregations**
+- **attachment into elasticsearch**
 
 ## License
 
