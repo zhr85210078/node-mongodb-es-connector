@@ -1,0 +1,40 @@
+{
+    "mongodb": {
+        "m_database": "myTest",
+        "m_collectionname": "users",
+        "m_filterfilds": {
+            "ActiveFlag" : true
+        },
+        "m_returnfilds": {
+            "Email": 1,
+            "Phone": 1,
+            "StaffCode": 1
+        },
+        "m_connection": {
+            "m_servers": [
+                "localhost:29031",
+                "localhost:29032",
+                "localhost:29033"
+            ],
+            "m_authentication": {
+                "username": "UserAdmin",
+                "password": "pass1234",
+                "authsource": "admin",
+                "replicaset": "my_replica"
+            }
+        },
+        "m_documentsinbatch": 5000
+    },
+    "elasticsearch": {
+        "e_index": "myusers",
+        "e_type": "users",
+        "e_connection": {
+            "e_server": "http://localhost:9200",
+            "e_httpauth": {
+                "username": "EsAdmin",
+                "password": "pass1234"
+            }
+        },
+        "e_pipeline": false
+    }
+}

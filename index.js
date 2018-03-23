@@ -3,147 +3,92 @@ var path = require("path");
 var logger = require('./lib/util/logger.js');
 var main = require('./lib/main');
 var util = require('./lib/util/util');
+var currentFilePath;
 
 var start = function (filePath) {
+    filePath = currentFilePath;
     var getFileList = require('./lib/util/util').readFileList(filePath, []);
     main.init(getFileList, filePath);
 };
 
-var addSingleWatcher = function (filePath, mongodbDataBase, collectionName, filterQueryFilds, searchReturnFilds,
-    defaultValueFilds, mongodbConection, documentsinBatch, index, type, esConnection) {
+var addWatcher = function (fileName, obj) {
     var flag = false;
     try {
-        var watcher = {};
-        watcher.mongodb = {};
-        watcher.mongodb.mongodb_dataBase = mongodbDataBase;
-        watcher.mongodb.mongodb_collectionName = collectionName;
-        watcher.mongodb.mongodb_filterQueryFilds = filterQueryFilds;
-        watcher.mongodb.mongodb_searchReturnFilds = searchReturnFilds;
-        watcher.mongodb.mongodb_defaultValueFilds = defaultValueFilds;
-        watcher.mongodb.mongodb_connection = mongodbConection;
-        watcher.mongodb.mongodb_documentsinBatch = documentsinBatch;
-        watcher.elasticsearch = {};
-        watcher.elasticsearch.elasticsearch_index = index;
-        watcher.elasticsearch.elasticsearch_type = type;
-        watcher.elasticsearch.esConnection = esConnection;
-
-        // var firstMongodbServer=[];
-        // firstMongodbServer.push(mongodbConection.mongodb_servers[0]);
-        // var mongdbServerFolder = util.arrayto_String(firstMongodbServer);
-        // var esServerFolder = esConnection.elasticsearch_server.replace("http://", "").replace(":", "_");
-
-        // var fileFolder = path.join(filePath, mongdbServerFolder, esServerFolder);
-        // util.mkdir(fileFolder);
-        // var file = path.join(filePath, mongdbServerFolder, esServerFolder, mongodbDataBase + "_" + collectionName + "_" + index + '.json');
-
-        var mongdbServer = util.arrayto_String(mongodbConection.mongodb_servers);
-        var esServer = esConnection.elasticsearch_server.replace("http://", "").replace(":", "_");
-        var file = path.join(filePath, mongdbServer + "_" + esServer + "_" + mongodbDataBase + "_" + collectionName + "_" + index + '.json');
-
-        fs.writeFileSync(file, JSON.stringify(watcher, null, '\t'));
-        flag = true;
-    }
-    catch (error) {
-        logger.error(error);
-    }
-    return flag;
-};
-
-var updateSingleWatcher = function (filePath, mongodbDataBase, collectionName, filterQueryFilds, searchReturnFilds,
-    defaultValueFilds, mongodbConection, documentsinBatch, index, type, esConnection) {
-    var flag = false;
-    try {
-        var watcher = {};
-        watcher.mongodb = {};
-        watcher.mongodb.mongodb_dataBase = mongodbDataBase;
-        watcher.mongodb.mongodb_collectionName = collectionName;
-        watcher.mongodb.mongodb_filterQueryFilds = filterQueryFilds;
-        watcher.mongodb.mongodb_searchReturnFilds = searchReturnFilds;
-        watcher.mongodb.mongodb_defaultValueFilds = defaultValueFilds;
-        watcher.mongodb.mongodb_connection = mongodbConection;
-        watcher.mongodb.mongodb_documentsinBatch = documentsinBatch;
-        watcher.elasticsearch = {};
-        watcher.elasticsearch.elasticsearch_index = index;
-        watcher.elasticsearch.elasticsearch_type = type;
-        watcher.elasticsearch.esConnection = esConnection;
-
-        // var firstMongodbServer=[];
-        // firstMongodbServer.push(mongodbConection.mongodb_servers[0]);
-        // var mongdbServerFolder = util.arrayto_String(firstMongodbServer);
-        // var esServerFolder = esConnection.elasticsearch_server.replace("http://", "").replace(":", "_");
-
-        // var fileFolder = path.join(filePath, mongdbServerFolder, esServerFolder);
-        // util.mkdir(fileFolder);
-        // var file = path.join(filePath, mongdbServerFolder, esServerFolder, mongodbDataBase + "_" + collectionName + "_" + index + '.json');
-
-        var mongdbServer = util.arrayto_String(mongodbConection.mongodb_servers);
-        var esServer = esConnection.elasticsearch_server.replace("http://", "").replace(":", "_");
-        var file = path.join(filePath, mongdbServer + "_" + esServer + "_" + mongodbDataBase + "_" + collectionName + "_" + index + '.json');
-
-        fs.writeFileSync(file, JSON.stringify(watcher, null, '\t'));
-        flag = true;
-    }
-    catch (error) {
-        logger.error(error);
-    }
-    return flag;
-};
-
-var deleteSingleWatcher = function (filePath, mongodbDataBase, collectionName, mongodbConection, index, esConnection) {
-    var flag = false;
-    try {
-        // var firstMongodbServer=[];
-        // firstMongodbServer.push(mongodbConection.mongodb_servers[0]);
-        // var mongdbServerFolder = util.arrayto_String(firstMongodbServer);
-        // var esServerFolder = esConnection.elasticsearch_server.replace("http://", "").replace(":", "_");
-        // var fileFolder = path.join(filePath, mongdbServerFolder, esServerFolder);
-
-        var mongdbServer = util.arrayto_String(mongodbConection.mongodb_servers);
-        var esServer = esConnection.elasticsearch_server.replace("http://", "").replace(":", "_");
-
-        var files = fs.readdirSync(filePath);
-        files.forEach(function (filename) {
-            if (filename == mongdbServer + "_" + esServer + "_" + mongodbDataBase + "_" + collectionName + "_" + index + '.json') {
-                fs.unlinkSync(path.join(filePath, filename));
-                flag = true;
+        var files = fs.readdirSync(currentFilePath);
+        files.forEach(function (name) {
+            var item = JSON.parse(fs.readFileSync(path.join(currentFilePath, name)));
+            if (fileName != name) {
+                if ((item.elasticsearch.e_connection.e_server == obj.elasticsearch.e_connection.e_server
+                    && item.elasticsearch.e_index != obj.elasticsearch.e_index)
+                    || (item.elasticsearch.e_connection.e_server != obj.elasticsearch.e_connection.e_server
+                        && item.elasticsearch.e_index == obj.elasticsearch.e_index)) {
+                    var file = path.join(fileName + '.json');
+                    fs.writeFileSync(file, obj);
+                    flag = true;
+                }
             }
+            return flag;
         });
     }
     catch (error) {
         logger.error(error);
     }
-    return flag;
-};
+}
 
-var isExistWatcher = function (filePath, mongodbDataBase, collectionName, mongodbConection, index, esConnection) {
+var updateWatcher = function (fileName, obj) {
     var flag = false;
     try {
-        // var firstMongodbServer = [];
-        // firstMongodbServer.push(mongodbConection.mongodb_servers[0]);
-        // var mongdbServerFolder = util.arrayto_String(firstMongodbServer);
-        // var esServerFolder = esConnection.elasticsearch_server.replace("http://", "").replace(":", "_");
-        // var fileFolder = path.join(filePath, mongdbServerFolder, esServerFolder);
-
-        var mongdbServer = util.arrayto_String(mongodbConection.mongodb_servers);
-        var esServer = esConnection.elasticsearch_server.replace("http://", "").replace(":", "_");
-
-        var files = fs.readdirSync(filePath);
-        files.forEach(function (filename) {
-            if (filename == mongdbServer + "_" + esServer + "_" + mongodbDataBase + "_" + collectionName + "_" + index + '.json') {
+        var files = fs.readdirSync(currentFilePath);
+        files.forEach(function (name) {
+            if (fileName == name) {
+                fs.writeFileSync(file, obj);
                 flag = true;
             }
+            return flag;
         });
     }
     catch (error) {
         logger.error(error);
     }
-    return flag;
-};
+}
+
+var deleteWatcher = function (fileName) {
+    var flag = false;
+    try {
+        var files = fs.readdirSync(currentFilePath);
+        files.forEach(function (name) {
+            if (fileName == name) {
+                fs.unlinkSync(path.join(currentFilePath, filename));
+                flag = true;
+            }
+            return flag;
+        });
+    }
+    catch (error) {
+        logger.error(error);
+    }
+}
+
+var isExistWatcher = function (fileName) {
+    var flag = false;
+    try {
+        var files = fs.readdirSync(currentFilePath);
+        files.forEach(function (name) {
+            if (fileName == name) {
+                flag = true;
+            }
+            return flag;
+        });
+    }
+    catch (error) {
+        logger.error(error);
+    }
+}
 
 module.exports = {
     start: start,
-    addSingleWatcher: addSingleWatcher,
-    updateSingleWatcher: updateSingleWatcher,
-    deleteSingleWatcher: deleteSingleWatcher,
+    addWatcher: addWatcher,
+    updateWatcher: updateWatcher,
+    deleteWatcher: deleteWatcher,
     isExistWatcher: isExistWatcher
 };

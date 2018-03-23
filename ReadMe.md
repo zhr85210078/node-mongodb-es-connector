@@ -1,24 +1,23 @@
 # node-mongodb-es-connector
 
-ElasticSearch and MongoDB sync module for node
+ElasticSearch and MongoDB sync module for node (support attentment sync)
 ![structure]
 
-Supports one-to-one, one-to-many, many-to-one, and many-to-many relationships.
+Supports one-to-one and one-to-many relationships.
 
 - **one-to-one** - one mongodb collection to one elasticsearch index
-- **one-to-many** - one mongodb collection to many elasticsearch indexs
-- **many-to-one** - many mongodb collections to one elasticsearch index
-- **many-to-many** - many mongodb collections to many elasticsearch indexs
+- **one-to-many** - one mongodb collection to one elasticsearch server many indexs,
+                    or one mongodb collection to many elasticsearch servers one index
 
 ## my current version
 
     elasticsearch：v6.1.2
-    mongodb: v3.2.10
+    mongodb: v3.6.2
     Nodejs: v8.9.3
 
 ## What does it do
 
-node-mongodb-es-connector package keeps your mongoDB collections and elastic search cluster in sync. It does so by tailing the mongo oplog and replicate whatever crud operation into elastic search cluster without any overhead. Please note that a replica set is needed for the package to tail mongoDB.
+node-mongodb-es-connector package keeps your mongoDB collections and elastic search cluster in sync. It does so by tailing the mongo oplog and replicate whatever crud operation into elastic search cluster without any overhead. Please note that a replica set is needed for the package to tail mongoDB.(support attentment sync)
 
 ## How to use
 
@@ -30,83 +29,148 @@ or [Download](https://github.com/zhr85210078/node-mongodb-es-connector/tree/mast
 
 ## Sample usage
 
-Create a file in the **crawlerDataConfig** folder,the Naming rules is `MongodbServers_port_ElasticsearchServer_port_MongodbDataBase_MongodbCollectionName_ElasticSearchIndexName.json`.
+Create a file in the **crawlerDataConfig** folder,the Naming rules is `ElasticSearchIndexName.json` or any name `.json`.
 
 If you have more additional configuration in the `crawlerDataConfig` folder.
 
 For example:
 
-`localhost_29031_localhost_9200_myTest_carts_mycarts.json`
+`mycarts.json`
 
 ```bash
 {
     "mongodb": {
-        "mongodb_dataBase": "myTest",
-        "mongodb_collectionName": "carts",
-        "mongodb_filterQueryFilds": {
-            "__v" : 0
+        "m_database": "myTest",
+        "m_collectionname": "carts",
+        "m_filterfilds": {
+            "version" : "2.0"
         },
-        "mongodb_searchReturnFilds": {
+        "m_returnfilds": {
             "cName": 1,
             "cPrice": 1,
             "cImgSrc": 1
         },
-        "mongodb_defaultValueFilds": {
-            "cartTest1": "cartTest111",
-            "cartTest2": "cartTest222"
-        },
-        "mongodb_connection": {
-            "mongodb_servers": [
-                "localhost:29031"
+        "m_connection": {
+            "m_servers": [
+                "localhost:29031",
+                "localhost:29032",
+                "localhost:29033"
             ],
             "mongodb_authentication": {
-                "userName": "mdAdmin",
-                "passWord": "mdPwd",
+                "userName": "UserAdmin",
+                "passWord": "pass1234",
                 "authSource":"admin",
-                "replicaSet":"myReplicaSet"
+                "replicaSet":"my_replica"
             }
         },
-        "mongodb_documentsinBatch": 5000
+        "m_documentsinbatch": 5000
     },
     "elasticsearch": {
-        "elasticsearch_index": "mycarts",
-        "elasticsearch_type": "carts",
-        "esConnection": {
-            "elasticsearch_server": "http://localhost:9200",
-            "elasticsearch_httpAuth": {
-                "userName": "esAdmin",
-                "passWord": "esPwd"
+        "e_index": "mycarts",
+        "e_type": "carts",
+        "e_connection": {
+            "e_server": "http://localhost:9200",
+            "e_httpauth": {
+                "username": "EsAdmin",
+                "password": "pass1234"
             }
-        }
+        },
+        "e_pipeline": "mypipeline"
     }
 }
 ```
 
-- **mongodb_dataBase** - MongoDB dataBase to watch.
-- **mongodb_collectionName** - MongoDB collection to watch.
-- **mongodb_filterQueryFilds** - MongoDB filterQuery,support simple filter.(Default value is `null`)
-- **mongodb_searchReturnFilds** - MongoDB need to return to the field.(Default value is `null`)
-- **mongodb_defaultValueFilds** - MongoDB expand field.(can default key and value).(Default value is `null`)
-- **mongodb_connection**
-  - **mongodb_servers** - MongoDB servers.(Array)
-  - **mongodb_authentication** - If you do not need to verify the default value is `null`.
-    - **userName** - MongoDB connection userName.
-    - **passWord** - MongoDB connection passWord.
-    - **authSource** - MongoDB user authentication.
-    - **replicaSet** - MongoDB replicaSet name.
-- **mongodb_documentsinBatch** - An integer that specifies number of documents to send to ElasticSearch in batches. (can be set to very high number.).
-- **elasticsearch_index** - ElasticSearch index where documents from watcher collection is saved.
-- **elasticsearch_type** - ElasticSearch type given to documents from watcher collection.
-- **esConnection**
-  - **elasticsearch_server** - URL to a running ElasticSearch cluster.
-  - **elasticsearch_httpAuth** - If you do not need to verify the default value is `null`.
-    - **userName** - ElasticSearch connection userName.
-    - **passWord** - ElasticSearch connection passWord.
+- **m_database** - MongoDB dataBase to watch.
+- **m_collectionname** - MongoDB collection to watch.
+- **m_filterfilds** - MongoDB filterQuery,support simple filter.(Default value is `null`)
+- **m_returnfilds** - MongoDB need to return to the field.(Default value is `null`)
+- **m_connection**
+  - **m_servers** - MongoDB servers.(Array)
+  - **m_authentication** - If you do not need to verify the default value is `null`.
+    - **username** - MongoDB connection userName.
+    - **password** - MongoDB connection passWord.
+    - **authsource** - MongoDB user authentication.
+    - **replicaset** - MongoDB replicaSet name.
+- **m_documentsinbatch** - An integer that specifies number of documents to send to ElasticSearch in batches. (can be set to very high number.).
+- **e_index** - ElasticSearch index where documents from watcher collection is saved.
+- **e_type** - ElasticSearch type given to documents from watcher collection.
+- **e_connection**
+  - **e_server** - URL to a running ElasticSearch cluster.
+  - **e_httpauth** - If you do not need to verify the default value is `null`.
+    - **username** - ElasticSearch connection userName.
+    - **password** - ElasticSearch connection passWord.
+- **e_pipeline** - ElasticSearch pipeline name.
 
 ## Start up
 
 ```bash
 node app.js
+```
+## Extra APIs
+
+index.js (only crud config json )
+
+**start()** - must start up before all the APIs.
+
+**addWatcher()** - add a config json.
+Parameters:
+| Name     | Type        |
+| -------- | --------    |
+| fileName | string      |
+| obj      | jsonObject  |
+***return: true or false***
+
+**updateWatcher()** - update a config json.
+Parameters:
+| Name     | Type        |
+| -------- | --------    |
+| fileName | string      |
+| obj      | jsonObject  |
+***return: true or false***
+
+**deleteWatcher()** - delete a config json.
+Parameters:
+| Name     | Type        |
+| -------- | --------    |
+| fileName | string      |
+***return: true or false***
+
+**isExistWatcher()** - check out this config json exist.
+Parameters:
+| Name     | Type        |
+| -------- | --------    |
+| fileName | string      |
+***return: true or false***
+
+Chinese Documentation - [中文文档](./README.zh-CN.md)
+
+## ChangeLog
+
+- **v1.1.12** - update promise plugin,and referencing the Bluebird plugin in the project.Real-time synchronization in support of more than 1000 indexes.Message queues using promise.
+- **v2.0.0** - support elasticsearch pipeline aggregations and attachment into elasticsearch.
+
+## How to use pipeline
+
+- **prepare make a pipeline in elasticsearch**
+
+```bash
+PUT _ingest/pipeline/mypipeline
+{
+  "description" : "Extract attachment information from arrays",
+  "processors" : [
+    {
+      "foreach": {
+        "field": "attachments",
+        "processor": {
+          "attachment": {
+            "target_field": "_ingest._value.attachment",
+            "field": "_ingest._value.data"
+          }
+        }
+      }
+    }
+  ]
+}
 ```
 
 ## Result
@@ -118,28 +182,6 @@ node app.js
 - **elasticsearch**
 
 ![elasticsearch]
-
-## Extra APIs
-
-index.js
-
-- **Method**
-  - **start()** - must start up before all the APIs.
-  - **addSingleWatcher()** - add a config json.
-  - **updateSingleWatcher()** - update a config json.
-  - **deleteSingleWatcher()** - delete a config json.
-  - **isExistWatcher()** - check out this config json exist.
-
-Chinese Documentation - [中文文档](./README.zh-CN.md)
-
-## ChangeLog
-
-- **v1.1.12** - update promise plugin,and referencing the Bluebird plugin in the project.Real-time synchronization in support of more than 1000 indexes.Message queues using promise.
-
-## To be developed
-
-- **support elasticsearch pipeline aggregations**
-- **attachment into elasticsearch**
 
 ## License
 
