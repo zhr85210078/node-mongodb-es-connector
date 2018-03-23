@@ -116,32 +116,40 @@ index.js (只用来做配置文件的增删改查)
 
 **addWatcher()** - 增加一个配置文件.
 传参:
+
 | Name     | Type        |
 | -------- | --------    |
 | fileName | string      |
 | obj      | jsonObject  |
+
 ***返回值: true or false***
 
 **updateWatcher()** - 修改一个配置文件.
 传参:
+
 | Name     | Type        |
 | -------- | --------    |
 | fileName | string      |
 | obj      | jsonObject  |
+
 ***返回值: true or false***
 
 **deleteWatcher()** - 删除一个配置文件.
 传参:
+
 | Name     | Type        |
 | -------- | --------    |
 | fileName | string      |
+
 ***返回值: true or false***
 
 **isExistWatcher()** - 检查当前配置文件是否存在.
-Parameters:
+传参:
+
 | Name     | Type        |
 | -------- | --------    |
 | fileName | string      |
+
 ***返回值: true or false***
 
 英文文档 - [English Documentation](./ReadMe.md)

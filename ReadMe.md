@@ -114,32 +114,40 @@ index.js (only crud config json )
 
 **addWatcher()** - add a config json.
 Parameters:
+
 | Name     | Type        |
 | -------- | --------    |
 | fileName | string      |
 | obj      | jsonObject  |
+
 ***return: true or false***
 
 **updateWatcher()** - update a config json.
 Parameters:
+
 | Name     | Type        |
 | -------- | --------    |
 | fileName | string      |
 | obj      | jsonObject  |
+
 ***return: true or false***
 
 **deleteWatcher()** - delete a config json.
 Parameters:
+
 | Name     | Type        |
 | -------- | --------    |
 | fileName | string      |
+
 ***return: true or false***
 
 **isExistWatcher()** - check out this config json exist.
 Parameters:
+
 | Name     | Type        |
 | -------- | --------    |
 | fileName | string      |
+
 ***return: true or false***
 
 Chinese Documentation - [中文文档](./README.zh-CN.md)
