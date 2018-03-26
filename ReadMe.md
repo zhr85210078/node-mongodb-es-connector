@@ -57,10 +57,10 @@ For example:
                 "localhost:29033"
             ],
             "mongodb_authentication": {
-                "userName": "UserAdmin",
-                "passWord": "pass1234",
-                "authSource":"admin",
-                "replicaSet":"my_replica"
+                "username": "UserAdmin",
+                "password": "pass1234",
+                "authsource":"admin",
+                "replicaset":"my_replica"
             }
         },
         "m_documentsinbatch": 5000
