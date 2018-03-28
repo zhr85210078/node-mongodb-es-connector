@@ -57,7 +57,7 @@ npm install es-mongodb-sync
                 "localhost:29032",
                 "localhost:29033"
             ],
-            "mongodb_authentication": {
+            "m_authentication": {
                 "username": "UserAdmin",
                 "password": "pass1234",
                 "authsource":"admin",
