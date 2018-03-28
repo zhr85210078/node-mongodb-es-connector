@@ -18,10 +18,10 @@ var addWatcher = function (fileName, obj) {
         files.forEach(function (name) {
             var item = JSON.parse(fs.readFileSync(path.join(currentFilePath, name)));
             if (fileName != name) {
-                if ((item.elasticsearch.e_connection.e_server == obj.elasticsearch.e_connection.e_server
-                    && item.elasticsearch.e_index != obj.elasticsearch.e_index)
-                    || (item.elasticsearch.e_connection.e_server != obj.elasticsearch.e_connection.e_server
-                        && item.elasticsearch.e_index == obj.elasticsearch.e_index)) {
+                if ((item.elasticsearch.e_connection.e_server == obj.elasticsearch.e_connection.e_server &&
+                    item.elasticsearch.e_index != obj.elasticsearch.e_index) ||
+                    (item.elasticsearch.e_connection.e_server != obj.elasticsearch.e_connection.e_server &&
+                        item.elasticsearch.e_index == obj.elasticsearch.e_index)) {
                     var file = path.join(fileName + '.json');
                     fs.writeFileSync(file, obj);
                     flag = true;
@@ -33,7 +33,7 @@ var addWatcher = function (fileName, obj) {
     catch (error) {
         logger.error(error);
     }
-}
+};
 
 var updateWatcher = function (fileName, obj) {
     var flag = false;
@@ -50,7 +50,7 @@ var updateWatcher = function (fileName, obj) {
     catch (error) {
         logger.error(error);
     }
-}
+};
 
 var deleteWatcher = function (fileName) {
     var flag = false;
@@ -67,7 +67,7 @@ var deleteWatcher = function (fileName) {
     catch (error) {
         logger.error(error);
     }
-}
+};
 
 var isExistWatcher = function (fileName) {
     var flag = false;
@@ -83,7 +83,7 @@ var isExistWatcher = function (fileName) {
     catch (error) {
         logger.error(error);
     }
-}
+};
 
 module.exports = {
     start: start,
