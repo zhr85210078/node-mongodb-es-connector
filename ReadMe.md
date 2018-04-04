@@ -110,6 +110,8 @@ node app.js
 
 index.js (only crud config json )
 
+[Example](https://github.com/zhr85210078/es-connector-api)
+
 **start()** - must start up before all the APIs.
 
 **addWatcher()** - add a config json.

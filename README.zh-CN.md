@@ -112,6 +112,8 @@ node app.js
 
 index.js (只用来做配置文件的增删改查)
 
+[例子](https://github.com/zhr85210078/es-connector-api)
+
 **start()** - must start up before all the APIs.
 
 **addWatcher()** - 增加一个配置文件.
