@@ -1,6 +1,6 @@
 {
   "name": "es-mongodb-sync",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "nodejs mongodb elasticsearch synchrodata",
   "main": "app.js",
   "scripts": {
