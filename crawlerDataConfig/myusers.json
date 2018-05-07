@@ -20,10 +20,12 @@
                 "username": "UserAdmin",
                 "password": "pass1234",
                 "authsource": "admin",
-                "replicaset": "my_replica"
+                "replicaset": "my_replica",
+				"ssl":false
             }
         },
-        "m_documentsinbatch": 5000
+        "m_documentsinbatch": 5000,
+		"m_delaytime": 1000
     },
     "elasticsearch": {
         "e_index": "myusers",
@@ -35,6 +37,7 @@
                 "password": "pass1234"
             }
         },
-        "e_pipeline": false
+        "e_pipeline": false,
+		"e_iscontainattachment": false
     }
 }

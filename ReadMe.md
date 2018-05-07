@@ -60,10 +60,12 @@ For example:
                 "username": "UserAdmin",
                 "password": "pass1234",
                 "authsource":"admin",
-                "replicaset":"my_replica"
+                "replicaset":"my_replica",
+                "ssl":false
             }
         },
-        "m_documentsinbatch": 5000
+        "m_documentsinbatch": 5000,
+        "m_delaytime": 1000
     },
     "elasticsearch": {
         "e_index": "mycarts",
@@ -75,7 +77,8 @@ For example:
                 "password": "pass1234"
             }
         },
-        "e_pipeline": "mypipeline"
+        "e_pipeline": "mypipeline",
+        "e_iscontainattachment": false
     }
 }
 ```
@@ -91,7 +94,9 @@ For example:
     - **password** - MongoDB connection passWord.
     - **authsource** - MongoDB user authentication.
     - **replicaset** - MongoDB replicaSet name.
-- **m_documentsinbatch** - An integer that specifies number of documents to send to ElasticSearch in batches. (can be set to very high number.).
+    - **ssl** - MongoDB ssl.(Default value is `false`)
+- **m_documentsinbatch** - An integer that specifies number of documents to send to ElasticSearch in batches. (can be set to very high number).
+- **m_delaytime** - Number of milliseconds between batches the default value is `1000`ms.
 - **e_index** - ElasticSearch index where documents from watcher collection is saved.
 - **e_type** - ElasticSearch type given to documents from watcher collection.
 - **e_connection**
@@ -100,6 +105,7 @@ For example:
     - **username** - ElasticSearch connection userName.
     - **password** - ElasticSearch connection passWord.
 - **e_pipeline** - ElasticSearch pipeline name.
+- **e_iscontainattachment** - Is or not contain attachment the default value is `false`.
 
 ## Start up
 

@@ -61,10 +61,12 @@ npm install es-mongodb-sync
                 "username": "UserAdmin",
                 "password": "pass1234",
                 "authsource":"admin",
-                "replicaset":"my_replica"
+                "replicaset":"my_replica",
+                "ssl":false
             }
         },
-        "m_documentsinbatch": 5000
+        "m_documentsinbatch": 5000,
+        "m_delaytime": 1000
     },
     "elasticsearch": {
         "e_index": "mycarts",
@@ -76,7 +78,8 @@ npm install es-mongodb-sync
                 "password": "pass1234"
             }
         },
-        "e_pipeline": "mypipeline"
+        "e_pipeline": "mypipeline",
+        "e_iscontainattachment": false
     }
 }
 ```
@@ -92,7 +95,9 @@ npm install es-mongodb-sync
     - **password** - MongoDB连接的密码.
     - **authsource** - MongoDB用户认证,默认为`admin`.
     - **replicaset** - MongoDB的repliac结构的名字.
-- **m_documentsinbatch** - 一次性从mongodb往Elasticsearch里传入数据的条数. (你可以设置比较大的值,默认为1000.).
+    - **ssl** - MongoDB的ssl.(默认值为`false`)
+- **m_documentsinbatch** - 一次性从mongodb往Elasticsearch里传入数据的条数. (你可以设置比较大的值,默认为1000).
+- **m_delaytime** - 每次进elasticsearch数据的间隔时间(默认值为`1000`ms).
 - **e_index** - ElasticSearch里的index.
 - **e_type** - ElasticSearch里的type,这里的type主要为了使用bulk.
 - **e_connection**
@@ -101,6 +106,7 @@ npm install es-mongodb-sync
     - **username** - ElasticSearch连接的用户名.
     - **password** - ElasticSearch连接的密码.
 - **e_pipeline** - ElasticSearch 中pipeline的名称.
+- **e_iscontainattachment** - pipeline是否包含附件规则(默认值为`false`).
 
 ## 如何启动
 
