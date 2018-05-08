@@ -78,7 +78,7 @@ For example:
             }
         },
         "e_pipeline": "mypipeline",
-        "e_iscontainattachment": false
+        "e_iscontainattachment": true
     }
 }
 ```
@@ -112,6 +112,9 @@ For example:
 ```bash
 node app.js
 ```
+
+![start]
+
 ## Extra APIs
 
 index.js (only crud config json )
@@ -204,6 +207,8 @@ PUT _ingest/pipeline/mypipeline
 The MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
 
 [structure]:./test/img/structure.jpg "structure"
+
+[start]:./test/img/start.gif "start"
 
 [mongodb]:./test/img/mongoDB.jpg "mongodb"
 

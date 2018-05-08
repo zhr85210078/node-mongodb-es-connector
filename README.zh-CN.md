@@ -79,7 +79,7 @@ npm install es-mongodb-sync
             }
         },
         "e_pipeline": "mypipeline",
-        "e_iscontainattachment": false
+        "e_iscontainattachment": true
     }
 }
 ```
@@ -113,6 +113,8 @@ npm install es-mongodb-sync
 ```bash
 node app.js
 ```
+
+![start]
 
 ## 拓展API
 
@@ -206,6 +208,8 @@ PUT _ingest/pipeline/mypipeline
 The MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
 
 [structure]:./test/img/structure.jpg "structure"
+
+[start]:./test/img/start.gif "start"
 
 [mongodb]:./test/img/mongoDB.jpg "mongodb"
 
