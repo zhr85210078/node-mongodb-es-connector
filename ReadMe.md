@@ -95,6 +95,7 @@ For example:
     - **authsource** - MongoDB user authentication.
     - **replicaset** - MongoDB replicaSet name.
     - **ssl** - MongoDB ssl.(Default value is `false`)
+- **m_url** - replace `m_connection`(Either-or)
 - **m_documentsinbatch** - An integer that specifies number of documents to send to ElasticSearch in batches. (can be set to very high number).
 - **m_delaytime** - Number of milliseconds between batches the default value is `1000`ms.
 - **e_index** - ElasticSearch index where documents from watcher collection is saved.
@@ -123,6 +124,8 @@ index.js (only crud config json )
 
 **start()** - must start up before all the APIs.
 
+---
+
 **addWatcher()** - add a config json.
 Parameters:
 
@@ -132,6 +135,8 @@ Parameters:
 | obj      | jsonObject  |
 
 ***return: true or false***
+
+---
 
 **updateWatcher()** - update a config json.
 Parameters:
@@ -143,6 +148,8 @@ Parameters:
 
 ***return: true or false***
 
+---
+
 **deleteWatcher()** - delete a config json.
 Parameters:
 
@@ -151,6 +158,8 @@ Parameters:
 | fileName | string      |
 
 ***return: true or false***
+
+---
 
 **isExistWatcher()** - check out this config json exist.
 Parameters:
@@ -161,12 +170,19 @@ Parameters:
 
 ***return: true or false***
 
+---
+
+**getInfoArray()** - get every config status(waiting/initialling/running/stoped).
+
+---
+
 Chinese Documentation - [中文文档](./README.zh-CN.md)
 
 ## ChangeLog
 
 - **v1.1.12** - update promise plugin,and referencing the Bluebird plugin in the project.Real-time synchronization in support of more than 1000 indexes.Message queues using promise.
 - **v2.0.0** - support elasticsearch pipeline aggregations and attachment into elasticsearch.
+- **v2.0.12** - add watch config file sync status(`getInfoArray()`).
 
 ## How to use pipeline
 

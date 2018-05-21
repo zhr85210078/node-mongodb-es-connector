@@ -24,6 +24,7 @@
 				"ssl":false
             }
         },
+        "m_url":"mongodb://UserAdmin:pass1234@localhost:29031,localhost:29032,localhost:29033/myTest?authSource=admin&replicaSet=my_replica",
         "m_documentsinbatch": 5000,
 		"m_delaytime": 1000
     },

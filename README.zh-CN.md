@@ -96,6 +96,7 @@ npm install es-mongodb-sync
     - **authsource** - MongoDB用户认证,默认为`admin`.
     - **replicaset** - MongoDB的repliac结构的名字.
     - **ssl** - MongoDB的ssl.(默认值为`false`)
+- **m_url** - 替换`m_connection`节点(二选一)
 - **m_documentsinbatch** - 一次性从mongodb往Elasticsearch里传入数据的条数. (你可以设置比较大的值,默认为1000).
 - **m_delaytime** - 每次进elasticsearch数据的间隔时间(默认值为`1000`ms).
 - **e_index** - ElasticSearch里的index.
@@ -124,6 +125,8 @@ index.js (只用来做配置文件的增删改查)
 
 **start()** - must start up before all the APIs.
 
+---
+
 **addWatcher()** - 增加一个配置文件.
 传参:
 
@@ -133,6 +136,8 @@ index.js (只用来做配置文件的增删改查)
 | obj      | jsonObject  |
 
 ***返回值: true or false***
+
+---
 
 **updateWatcher()** - 修改一个配置文件.
 传参:
@@ -144,6 +149,8 @@ index.js (只用来做配置文件的增删改查)
 
 ***返回值: true or false***
 
+---
+
 **deleteWatcher()** - 删除一个配置文件.
 传参:
 
@@ -152,6 +159,8 @@ index.js (只用来做配置文件的增删改查)
 | fileName | string      |
 
 ***返回值: true or false***
+
+---
 
 **isExistWatcher()** - 检查当前配置文件是否存在.
 传参:
@@ -162,12 +171,19 @@ index.js (只用来做配置文件的增删改查)
 
 ***返回值: true or false***
 
+---
+
+**getInfoArray()** - 获取每个配置文件的当前状态(waiting/initialling/running/stoped).
+
+---
+
 英文文档 - [English Documentation](./ReadMe.md)
 
 ## 更新日志
 
 - **v1.1.12** - 更新promise插件并且在当前项目中使用bluebird插件,支持超过1000条索引的实时数据同步,使用promise的消息队列.
 - **v2.0.0** - 支持elasticsearch的pipeline,支持同步附件到elasticsearch.
+- **v2.0.12** - 增加监听配置文件当前同步的状态(`getInfoArray()`).
 
 ## 如何使用elasticsearch的pipeline
 
