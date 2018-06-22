@@ -16,7 +16,7 @@ var addWatcher = function (fileName, obj) {
     var flag = false;
     try {
         var files = fs.readdirSync(currentFilePath);
-        if (files.length > 0) {
+        if (files && files.length > 0) {
             files.forEach(function (name) {
                 var item = JSON.parse(fs.readFileSync(path.join(currentFilePath, name)));
                 if ((fileName + '.json') !== name) {
@@ -45,7 +45,7 @@ var updateWatcher = function (fileName, obj) {
     var flag = false;
     try {
         var files = fs.readdirSync(currentFilePath);
-        if (files.length > 0) {
+        if (files && files.length > 0) {
             files.forEach(function (name) {
                 if ((fileName + '.json') === name) {
                     var file = path.join(currentFilePath, fileName + '.json');
@@ -69,25 +69,27 @@ var deleteWatcher = function (fileName) {
     var fileNameTotal = fileName + '.json';
     try {
         var files = fs.readdirSync(currentFilePath);
-        var newArray = [];
-        files.forEach(function (name) {
-            if (fileNameTotal === name) {
-                var currentFileContent = require(path.join(currentFilePath, name));
-                fs.unlinkSync(path.join(currentFilePath, name));
-                flag = true;
-                if (global.infoArray && global.infoArray.length > 0) {
-                    _.find(global.infoArray, function (file) {
-                        if (file.cluster === currentFileContent.elasticsearch.e_connection.e_server &&
-                            file.index === currentFileContent.elasticsearch.e_index) {
-                            return;
-                        } else {
-                            newArray.push(file);
-                        }
-                    });
+        if (files && files.length > 0) {
+            var newArray = [];
+            files.forEach(function (name) {
+                if (fileNameTotal === name) {
+                    var currentFileContent = require(path.join(currentFilePath, name));
+                    fs.unlinkSync(path.join(currentFilePath, name));
+                    flag = true;
+                    if (global.infoArray && global.infoArray.length > 0) {
+                        _.find(global.infoArray, function (file) {
+                            if (file.cluster === currentFileContent.elasticsearch.e_connection.e_server &&
+                                file.index === currentFileContent.elasticsearch.e_index) {
+                                return;
+                            } else {
+                                newArray.push(file);
+                            }
+                        });
+                    }
                 }
-            }
-        });
-        global.infoArray = newArray;
+            });
+            global.infoArray = newArray;
+        }
         return flag;
     } catch (error) {
         logger.errMethod("", obj.elasticsearch.e_index, "deleteWatcher error: " + error);
@@ -99,11 +101,13 @@ var isExistWatcher = function (fileName) {
     var fileNameTotal = fileName + '.json';
     try {
         var files = fs.readdirSync(currentFilePath);
-        files.forEach(function (name) {
-            if (fileNameTotal === name) {
-                flag = true;
-            }
-        });
+        if (files && files.length > 0) {
+            files.forEach(function (name) {
+                if (fileNameTotal === name) {
+                    flag = true;
+                }
+            });
+        }
         return flag;
     } catch (error) {
         logger.errMethod("", obj.elasticsearch.e_index, "isExistWatcher error: " + error);
