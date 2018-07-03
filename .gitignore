@@ -1,5 +1,7 @@
 .vscode
 node_modules
-logs/*
+logs/error/*
+logs/info/*
+logs/trace/*
 
 .history/*

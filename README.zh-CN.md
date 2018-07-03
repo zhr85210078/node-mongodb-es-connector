@@ -184,6 +184,7 @@ index.js (只用来做配置文件的增删改查)
 - **v1.1.12** - 更新promise插件并且在当前项目中使用bluebird插件,支持超过1000条索引的实时数据同步,使用promise的消息队列.
 - **v2.0.0** - 支持elasticsearch的pipeline,支持同步附件到elasticsearch.
 - **v2.0.12** - 增加监听配置文件当前同步的状态(`getInfoArray()`).
+- **v2.0.17** - 修改了日志目录.
 
 ## 如何使用elasticsearch的pipeline
 

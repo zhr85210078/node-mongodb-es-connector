@@ -3,7 +3,6 @@ var fs = require('fs');
 var path = require("path");
 var logger = require('./lib/util/logger.js');
 var main = require('./lib/main');
-var util = require('./lib/util/util');
 var currentFilePath = "";
 
 var start = function (filePath) {
@@ -92,7 +91,7 @@ var deleteWatcher = function (fileName) {
         }
         return flag;
     } catch (error) {
-        logger.errMethod("", obj.elasticsearch.e_index, "deleteWatcher error: " + error);
+        logger.errMethod("", "", "deleteWatcher error: " + error);
     }
 };
 
@@ -122,11 +121,21 @@ var getInfoArray = function () {
     }
 };
 
+var startTrace = function () {
+    return global.isTrace = true;
+}
+
+var stropTrace = function () {
+    return global.isTrace = false;
+}
+
 module.exports = {
     start: start,
     addWatcher: addWatcher,
     updateWatcher: updateWatcher,
     deleteWatcher: deleteWatcher,
     isExistWatcher: isExistWatcher,
-    getInfoArray: getInfoArray
+    getInfoArray: getInfoArray,
+    startTrace: startTrace,
+    stropTrace: stropTrace
 };

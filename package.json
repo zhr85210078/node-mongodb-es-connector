@@ -1,6 +1,6 @@
 {
   "name": "es-mongodb-sync",
-  "version": "2.0.16",
+  "version": "2.0.17",
   "description": "nodejs mongodb elasticsearch synchrodata",
   "main": "app.js",
   "scripts": {
@@ -10,6 +10,7 @@
   "author": "horan",
   "license": "MIT",
   "dependencies": {
+    "app-root-path": "^2.1.0",
     "bluebird": "^3.5.1",
     "dot-object": "^1.7.0",
     "elasticsearch": "^14.2.2",
