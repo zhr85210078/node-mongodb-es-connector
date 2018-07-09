@@ -1,0 +1,39 @@
+{
+    "mongodb": {
+        "m_database": "PwCUS_ProposalLibrary",
+        "m_collectionname": "CitationForm",
+        "m_filterfilds": null,
+        "m_returnfilds": null,
+        "m_connection": {
+            "m_servers": [
+                "HKDBSDWV002:29031",
+                "HKDBSDWV002:29032",
+                "HKDBSDWV002:29033"
+            ],
+            "m_authentication": {
+                "username": "DataCrawl_Admin",
+                "password": "pass1234",
+                "authsource": "admin",
+                "replicaset": "rs_ExceedNotes_DEV",
+                "ssl": false
+            }
+        },
+        "m_masterdocbatch": 200,
+        "m_masterdocdelay": 1000,
+        "m_attachmentbatch": 10,
+        "m_attachmentdelay": 10000
+    },
+    "elasticsearch": {
+        "e_index": "testsync_pwcusproposallibrary",
+        "e_type": "pwcuscitationform",
+        "e_connection": {
+            "e_server": "http://hkappdwv018:9500/",
+            "e_httpauth": {
+                "username": "MasterSiteAdmin",
+                "password": "P@ss1234"
+            }
+        },
+        "e_pipeline": "doc_search_attachment",
+        "e_iscontainattachment": true
+    }
+}

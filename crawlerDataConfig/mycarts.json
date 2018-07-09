@@ -3,7 +3,7 @@
         "m_database": "myTest",
         "m_collectionname": "carts",
         "m_filterfilds": {
-            "version" : "2.0"
+            "version": "2.0"
         },
         "m_returnfilds": {
             "cName": 1,
@@ -21,12 +21,14 @@
                 "password": "pass1234",
                 "authsource": "admin",
                 "replicaset": "my_replica",
-				"ssl":false
+                "ssl": false
             }
         },
-        "m_url":"mongodb://UserAdmin:pass1234@localhost:29031,localhost:29032,localhost:29033/myTest?authSource=admin&replicaSet=my_replica",
-        "m_documentsinbatch": 5000,
-		"m_delaytime": 1000
+        "m_url": "mongodb://UserAdmin:pass1234@localhost:29031,localhost:29032,localhost:29033/myTest?authSource=admin&replicaSet=my_replica",
+        "m_masterdocbatch": 5000,
+        "m_masterdocdelay": 1000,
+        "m_attachmentbatch": 10,
+        "m_attachmentdelay": 5000
     },
     "elasticsearch": {
         "e_index": "mycarts",
@@ -39,6 +41,6 @@
             }
         },
         "e_pipeline": "mypipeline",
-		"e_iscontainattachment": true
+        "e_iscontainattachment": true
     }
 }

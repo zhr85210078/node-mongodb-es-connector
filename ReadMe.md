@@ -64,8 +64,10 @@ For example:
                 "ssl":false
             }
         },
-        "m_documentsinbatch": 5000,
-        "m_delaytime": 1000
+        "m_masterdocbatch": 5000,
+        "m_masterdocdelay": 1000,
+        "m_attachmentbatch": 10,
+        "m_attachmentdelay": 5000
     },
     "elasticsearch": {
         "e_index": "mycarts",
@@ -96,8 +98,10 @@ For example:
     - **replicaset** - MongoDB replicaSet name.
     - **ssl** - MongoDB ssl.(Default value is `false`)
 - **m_url** - replace `m_connection`(Either-or)
-- **m_documentsinbatch** - An integer that specifies number of documents to send to ElasticSearch in batches. (can be set to very high number).
-- **m_delaytime** - Number of milliseconds between batches the default value is `1000`ms.
+- **m_masterdocbatch** - (`Master Doc`) An integer that specifies number of documents to send to ElasticSearch in batches (can be set to very high number).
+- **m_masterdocdelay** - (`Master Doc`) Number of milliseconds between batches the default value is `1000`ms.
+- **m_attachmentbatch** - (`Attachment`) An integer that specifies number of documents to send to ElasticSearch in batches (can be set to very high number).
+- **m_attachmentdelay** - (`Attachment`) Number of milliseconds between batches the default value is `1000`ms.
 - **e_index** - ElasticSearch index where documents from watcher collection is saved.
 - **e_type** - ElasticSearch type given to documents from watcher collection.
 - **e_connection**
@@ -184,6 +188,7 @@ Chinese Documentation - [中文文档](./README.zh-CN.md)
 - **v2.0.0** - support elasticsearch pipeline aggregations and attachment into elasticsearch.
 - **v2.0.12** - add watch config file sync status(`getInfoArray()`).
 - **v2.0.18** - update logs directory.
+- **v2.1.1** - update init method (master doc->attachment).
 
 ## How to use pipeline
 

@@ -24,8 +24,10 @@
 				"ssl":false
             }
         },
-        "m_documentsinbatch": 5000,
-		"m_delaytime": 1000
+        "m_masterdocbatch": 5000,
+        "m_masterdocdelay": 1000,
+        "m_attachmentbatch": 10,
+        "m_attachmentdelay": 5000
     },
     "elasticsearch": {
         "e_index": "myusers",

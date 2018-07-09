@@ -65,8 +65,10 @@ npm install es-mongodb-sync
                 "ssl":false
             }
         },
-        "m_documentsinbatch": 5000,
-        "m_delaytime": 1000
+        "m_masterdocbatch": 5000,
+        "m_masterdocdelay": 1000,
+        "m_attachmentbatch": 10,
+        "m_attachmentdelay": 5000
     },
     "elasticsearch": {
         "e_index": "mycarts",
@@ -97,8 +99,10 @@ npm install es-mongodb-sync
     - **replicaset** - MongoDB的repliac结构的名字.
     - **ssl** - MongoDB的ssl.(默认值为`false`)
 - **m_url** - 替换`m_connection`节点(二选一)
-- **m_documentsinbatch** - 一次性从mongodb往Elasticsearch里传入数据的条数. (你可以设置比较大的值,默认为1000).
-- **m_delaytime** - 每次进elasticsearch数据的间隔时间(默认值为`1000`ms).
+- **m_masterdocbatch** - (`主文档`) 一次性从mongodb往Elasticsearch里传入数据的条数. (你可以设置比较大的值,默认为1000).
+- **m_masterdocdelay** - (`主文档`) 每次进elasticsearch数据的间隔时间(默认值为`1000`ms).
+- **m_attachmentbatch** - (`附件`) 一次性从mongodb往Elasticsearch里传入数据的条数. (你可以设置比较大的值,默认为1000).
+- **m_attachmentdelay** - (`附件`) 每次进elasticsearch数据的间隔时间(默认值为`1000`ms).
 - **e_index** - ElasticSearch里的index.
 - **e_type** - ElasticSearch里的type,这里的type主要为了使用bulk.
 - **e_connection**
@@ -185,6 +189,7 @@ index.js (只用来做配置文件的增删改查)
 - **v2.0.0** - 支持elasticsearch的pipeline,支持同步附件到elasticsearch.
 - **v2.0.12** - 增加监听配置文件当前同步的状态(`getInfoArray()`).
 - **v2.0.18** - 修改了日志目录.
+- **v2.1.1** - 修改了初始化方法 (先进主文档->后进附件).
 
 ## 如何使用elasticsearch的pipeline
 
