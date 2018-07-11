@@ -224,6 +224,10 @@ PUT _ingest/pipeline/mypipeline
 
 ![elasticsearch]
 
+## Test
+
+![test]
+
 ## License
 
 The MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
@@ -235,3 +239,5 @@ The MIT License (MIT). Please see [LICENSE](LICENSE) for more information.
 [mongodb]:./test/img/mongoDB.jpg "mongodb"
 
 [elasticsearch]:./test/img/elasticsearch.jpg "elasticsearch"
+
+[test]:./test/img/test.gif "test"
