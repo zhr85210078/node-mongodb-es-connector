@@ -2,7 +2,7 @@
  * @Author: horan 
  * @Date: 2017-07-09 10:24:53 
  * @Last Modified by: horan
- * @Last Modified time: 2018-07-11 14:09:54
+ * @Last Modified time: 2018-07-11 17:39:01
  * @Api
  */
 
@@ -118,7 +118,7 @@ var isExistWatcher = function (fileName) {
         }
         return flag;
     } catch (error) {
-        logger.errMethod("", obj.elasticsearch.e_index, "isExistWatcher error: " + error);
+        logger.errMethod("", "", "isExistWatcher error: " + error);
     }
 };
 
