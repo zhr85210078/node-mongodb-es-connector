@@ -33,7 +33,7 @@ assert(true); // OK
 
 // Promise.reduce(dataList, function (total, item, index) {
 //     return new Promise(function (resolve, reject) {
-//         setTimeout(function () {
+//         //setTimeout(function () {
 //             mongoPromise.insertGridFsStreams(mongoUrl, item.metadata, filePath).then(function (result) {
 //                 if (result) {
 //                     mongoPromise.insertData(mongoUrl, "carts", item.masterDocArray).then(function (result) {
@@ -42,7 +42,7 @@ assert(true); // OK
 //                     });
 //                 }
 //             });
-//         }, 1000);
+//         //}, 1000);
 //     });
 // }, 0).then(function (result) {
 //     console.log("end");
