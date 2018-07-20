@@ -1,6 +1,6 @@
 {
   "name": "es-mongodb-sync",
-  "version": "2.1.7",
+  "version": "2.1.8",
   "description": "nodejs mongodb elasticsearch synchrodata",
   "main": "app.js",
   "scripts": {
@@ -25,8 +25,22 @@
     "winston": "^2.4.2",
     "winston-daily-rotate-file": "^1.7.2"
   },
+  "keywords": [
+    "elastic",
+    "search",
+    "elastic search",
+    "elasticsearch",
+    "es",
+    "lucene",
+    "mongodb",
+    "synchronization",
+    "sync",
+    "es-mongodb-sync"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/zhr85210078/node-mongodb-es-connector.git"
-  }
+  },
+  "homepage": "https://github.com/zhr85210078/node-mongodb-es-connector#readme",
+  "bugs": "https://github.com/zhr85210078/node-mongodb-es-connector/issues"
 }

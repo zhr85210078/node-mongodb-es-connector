@@ -6,7 +6,7 @@ var mongoUrl = "mongodb://UserAdmin:pass1234@localhost:29031,localhost:29032,loc
 var path = require("path");
 //var filePath = path.join(__dirname, 'img/structure.jpg');
 //var filePath = path.join(__dirname, 'img/mongoDB.jpg');
-var filePath = path.join(__dirname, 'img/elasticsearch.jpg');
+var filePath = path.join(__dirname, 'img/深入浅出Node.js.pdf');
 
 //var fileName="docs\\Citation2017-07-20T122437Z_2MA3H3WJHADT-3-2386.pptx";
 // mongoPromise.getGridFsFiles(mongoUrl, fileName).then(function (results) {
@@ -58,19 +58,19 @@ var filePath = path.join(__dirname, 'img/elasticsearch.jpg');
 
 
 // var metadata = {
-//     "MainCollectionName": "carts",
+//     "MainCollectionName": "books",
 //     "MainId": "5a91057c25c9c8e2124b9a86",
 //     "filename": "structure.jpg"
 // };
 // var metadata = {
-//     "MainCollectionName": "carts",
+//     "MainCollectionName": "books",
 //     "MainId": "5a9105cb25c9c8e2124b9b56",
 //     "filename": "mongoDB.jpg"
 // };
 var metadata = {
-    "MainCollectionName": "carts",
-    "MainId": "5a9105cb25c9c8e2124b9b56",
-    "filename": "elasticsearch.jpg"
+    "MainCollectionName": "books",
+    "MainId": "5b51775b37ab9513e1fa23f8",
+    "filename": "深入浅出Node.js.pdf"
 };
 mongoPromise.insertGridFsStreams(mongoUrl,metadata,filePath).then(function(result){
     console.log(result);

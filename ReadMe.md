@@ -5,6 +5,8 @@ ElasticSearch and MongoDB sync module for node (support attachment sync)
 
 Supports one-to-one and one-to-many relationships.
 
+Chinese Documentation - [中文文档](./README.zh-CN.md)
+
 - **one-to-one** - one mongodb collection to one elasticsearch index
 - **one-to-many** - one mongodb collection to one elasticsearch server many indexs,
                     or one mongodb collection to many elasticsearch servers one index
@@ -35,20 +37,20 @@ If you have more additional configuration in the `crawlerDataConfig` folder.
 
 For example:
 
-`mycarts.json`
+`mybooks.json`
 
 ```bash
 {
     "mongodb": {
         "m_database": "myTest",
-        "m_collectionname": "carts",
+        "m_collectionname": "books",
         "m_filterfilds": {
             "version" : "2.0"
         },
         "m_returnfilds": {
-            "cName": 1,
-            "cPrice": 1,
-            "cImgSrc": 1
+            "bName": 1,
+            "bPrice": 1,
+            "bImgSrc": 1
         },
         "m_connection": {
             "m_servers": [
@@ -64,14 +66,12 @@ For example:
                 "ssl":false
             }
         },
-        "m_masterdocbatch": 5000,
-        "m_masterdocdelay": 1000,
-        "m_attachmentbatch": 10,
-        "m_attachmentdelay": 5000
+        "m_documentsinbatch": 5000,
+        "m_delaytime": 1000
     },
     "elasticsearch": {
-        "e_index": "mycarts",
-        "e_type": "carts",
+        "e_index": "mybooks",
+        "e_type": "books",
         "e_connection": {
             "e_server": "http://localhost:9200",
             "e_httpauth": {
@@ -98,10 +98,8 @@ For example:
     - **replicaset** - MongoDB replicaSet name.
     - **ssl** - MongoDB ssl.(Default value is `false`)
 - **m_url** - replace `m_connection`(Either-or)
-- **m_masterdocbatch** - (`Master Doc`) An integer that specifies number of documents to send to ElasticSearch in batches (can be set to very high number).
-- **m_masterdocdelay** - (`Master Doc`) Number of milliseconds between batches the default value is `1000`ms.
-- **m_attachmentbatch** - (`Attachment`) An integer that specifies number of documents to send to ElasticSearch in batches (can be set to very high number).
-- **m_attachmentdelay** - (`Attachment`) Number of milliseconds between batches the default value is `1000`ms.
+- **m_documentsinbatch** - An integer that specifies number of documents to send to ElasticSearch in batches (can be set to very high number).
+- **m_delaytime** - Number of milliseconds between batches the default value is `1000`ms.
 - **e_index** - ElasticSearch index where documents from watcher collection is saved.
 - **e_type** - ElasticSearch type given to documents from watcher collection.
 - **e_connection**
@@ -180,8 +178,6 @@ Parameters:
 
 ---
 
-Chinese Documentation - [中文文档](./README.zh-CN.md)
-
 ## ChangeLog
 
 - **v1.1.12** - update promise plugin,and referencing the Bluebird plugin in the project.Real-time synchronization in support of more than 1000 indexes.Message queues using promise.
@@ -189,8 +185,16 @@ Chinese Documentation - [中文文档](./README.zh-CN.md)
 - **v2.0.12** - add watch config file sync status(`getInfoArray()`).
 - **v2.0.18** - update logs directory.
 - **v2.1.1** - update init method (master doc->attachment).
+- **v2.1.8** - use promise queue (init and mongo-oplog).
 
 ## How to use pipeline
+
+- **Install Ingest Attachment Processor Plugin**
+
+    https://www.elastic.co/guide/en/elasticsearch/plugins/6.3/ingest-attachment.html
+
+    more Elasticsearch Pipeline knowledge：
+    https://www.felayman.com/articles/2017/11/24/1511527532643.html?utm_medium=hao.caibaojian.com&utm_source=hao.caibaojian.com
 
 - **prepare make a pipeline in elasticsearch**
 

@@ -7,7 +7,7 @@ assert(true); // OK
 // var mongoPromise = require('../lib/promise/mongoPromise');
 // var mongoUrl = "mongodb://UserAdmin:pass1234@localhost:29031,localhost:29032,localhost:29033/myTest?authSource=admin&replicaSet=my_replica";
 // var path = require("path");
-// var filePath = path.join(__dirname, 'img/51CTO下载-C#字符串和正则表达式参考手册.pdf');
+// var filePath = path.join(__dirname, 'img/大型网站技术架构：核心原理与案例分析.pdf');
 
 // var dataList = [];
 // for (var i = 0; i < 100; i++) {
@@ -15,15 +15,15 @@ assert(true); // OK
 //     item.num = i;
 //     item.id = mongo.ObjectID();
 //     item.metadata = {
-//         "MainCollectionName": "carts",
+//         "MainCollectionName": "books",
 //         "MainId": item.id.toString(),
-//         "filename": "51CTO下载-C#字符串和正则表达式参考手册.pdf"
+//         "filename": "大型网站技术架构：核心原理与案例分析.pdf"
 //     };
 //     var masterDoc = {
 //         "_id": item.id,
 //         "cName": "name" + i,
 //         "cPrice": i * 1000,
-//         "cImgSrc": "51CTO下载-C#字符串和正则表达式参考手册.pdf",
+//         "cImgSrc": "大型网站技术架构：核心原理与案例分析.pdf",
 //         "version": "2.0"
 //     };
 //     item.masterDocArray = [];
@@ -33,16 +33,16 @@ assert(true); // OK
 
 // Promise.reduce(dataList, function (total, item, index) {
 //     return new Promise(function (resolve, reject) {
-//         //setTimeout(function () {
+//         setTimeout(function () {
 //             mongoPromise.insertGridFsStreams(mongoUrl, item.metadata, filePath).then(function (result) {
 //                 if (result) {
-//                     mongoPromise.insertData(mongoUrl, "carts", item.masterDocArray).then(function (result) {
+//                     mongoPromise.insertData(mongoUrl, "books", item.masterDocArray).then(function (result) {
 //                         console.log(item.num + ':' + result);
 //                         return resolve(result)
 //                     });
 //                 }
 //             });
-//         //}, 1000);
+//         }, 5000);
 //     });
 // }, 0).then(function (result) {
 //     console.log("end");

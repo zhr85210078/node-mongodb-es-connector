@@ -5,6 +5,8 @@
 
 支持一对一,一对多的数据传输方式.
 
+英文文档 - [English Documentation](./ReadMe.md)
+
 - **一对一** - 一个mongodb的collection对应一个elasticsearch的一个index之间的数据同步
 - **一对多** - 一个mongodb的collection对应一个elasticsearch的多个index之间的数据同步,
                 或者一个mongodb的collection对应多个elasticsearch的一个index之间的数据同步
@@ -36,20 +38,20 @@ npm install es-mongodb-sync
 
 例子:
 
-`mycarts.json`
+`mybooks.json`
 
 ```bash
 {
     "mongodb": {
         "m_database": "myTest",
-        "m_collectionname": "carts",
+        "m_collectionname": "books",
         "m_filterfilds": {
             "version" : "2.0"
         },
         "m_returnfilds": {
-            "cName": 1,
-            "cPrice": 1,
-            "cImgSrc": 1
+            "bName": 1,
+            "bPrice": 1,
+            "bImgSrc": 1
         },
         "m_connection": {
             "m_servers": [
@@ -65,14 +67,12 @@ npm install es-mongodb-sync
                 "ssl":false
             }
         },
-        "m_masterdocbatch": 5000,
-        "m_masterdocdelay": 1000,
-        "m_attachmentbatch": 10,
-        "m_attachmentdelay": 5000
+        "m_documentsinbatch": 5000,
+        "m_delaytime": 1000
     },
     "elasticsearch": {
-        "e_index": "mycarts",
-        "e_type": "carts",
+        "e_index": "mybooks",
+        "e_type": "books",
         "e_connection": {
             "e_server": "http://localhost:9200",
             "e_httpauth": {
@@ -99,10 +99,8 @@ npm install es-mongodb-sync
     - **replicaset** - MongoDB的repliac结构的名字.
     - **ssl** - MongoDB的ssl.(默认值为`false`)
 - **m_url** - 替换`m_connection`节点(二选一)
-- **m_masterdocbatch** - (`主文档`) 一次性从mongodb往Elasticsearch里传入数据的条数. (你可以设置比较大的值,默认为1000).
-- **m_masterdocdelay** - (`主文档`) 每次进elasticsearch数据的间隔时间(默认值为`1000`ms).
-- **m_attachmentbatch** - (`附件`) 一次性从mongodb往Elasticsearch里传入数据的条数. (你可以设置比较大的值,默认为1000).
-- **m_attachmentdelay** - (`附件`) 每次进elasticsearch数据的间隔时间(默认值为`1000`ms).
+- **m_documentsinbatch** - 一次性从mongodb往Elasticsearch里传入数据的条数. (你可以设置比较大的值,默认为1000).
+- **m_delaytime** - 每次进elasticsearch数据的间隔时间(默认值为`1000`ms).
 - **e_index** - ElasticSearch里的index.
 - **e_type** - ElasticSearch里的type,这里的type主要为了使用bulk.
 - **e_connection**
@@ -181,8 +179,6 @@ index.js (只用来做配置文件的增删改查)
 
 ---
 
-英文文档 - [English Documentation](./ReadMe.md)
-
 ## 更新日志
 
 - **v1.1.12** - 更新promise插件并且在当前项目中使用bluebird插件,支持超过1000条索引的实时数据同步,使用promise的消息队列.
@@ -190,8 +186,16 @@ index.js (只用来做配置文件的增删改查)
 - **v2.0.12** - 增加监听配置文件当前同步的状态(`getInfoArray()`).
 - **v2.0.18** - 修改了日志目录.
 - **v2.1.1** - 修改了初始化方法 (先进主文档->后进附件).
+- **v2.1.8** - 使用promise队列 (在初始化操作和mongo-oplog触发事件).
 
 ## 如何使用elasticsearch的pipeline
+
+- **安装附件处理器插件**
+
+    https://www.elastic.co/guide/en/elasticsearch/plugins/6.3/ingest-attachment.html
+
+    更多关于 Elasticsearch Pipeline 相关的知识：
+    https://www.felayman.com/articles/2017/11/24/1511527532643.html?utm_medium=hao.caibaojian.com&utm_source=hao.caibaojian.com
 
 - **准备在elasticsearch中创建一个pipeline**
 
