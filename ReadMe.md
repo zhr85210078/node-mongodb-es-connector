@@ -202,6 +202,7 @@ Parameters:
 - **v2.0.18** - update logs directory.
 - **v2.1.1** - update init method (master doc->attachment).
 - **v2.1.8** - use promise queue (init and mongo-oplog).
+- **v2.1.9** - add `m_extendfilds` and `m_extendinit`.
 
 ## How to use pipeline
 

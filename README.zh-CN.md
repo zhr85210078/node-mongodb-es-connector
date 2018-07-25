@@ -203,6 +203,7 @@ index.js (只用来做配置文件的增删改查)
 - **v2.0.18** - 修改了日志目录.
 - **v2.1.1** - 修改了初始化方法 (先进主文档->后进附件).
 - **v2.1.8** - 使用promise队列 (在初始化操作和mongo-oplog触发事件).
+- **v2.1.9** - 增加了 `m_extendfilds`节点和 `m_extendinit`节点.
 
 ## 如何使用elasticsearch的pipeline
 
