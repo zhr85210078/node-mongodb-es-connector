@@ -10,6 +10,16 @@
             "Phone": 1,
             "StaffCode": 1
         },
+        "m_extendfilds": {
+            "bA": "this is a extend fild bA",
+            "bB": "this is a extend fild bB"
+        },
+        "m_extendinit": {
+            "m_comparefild": "CreateDate",
+            "m_comparefildType": "DateTime",
+            "m_startFrom": "2018-05-01 00:00:00",
+            "m_endTo": "2018-05-31 23:59:59"
+        },
         "m_connection": {
             "m_servers": [
                 "localhost:29031",

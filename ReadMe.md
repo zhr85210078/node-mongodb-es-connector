@@ -13,7 +13,7 @@ Chinese Documentation - [中文文档](./README.zh-CN.md)
 
 ## my current version
 
-    elasticsearch：v6.1.2
+    elasticsearch: v6.1.2
     mongodb: v3.6.2
     Nodejs: v8.9.3
 
@@ -52,6 +52,16 @@ For example:
             "bPrice": 1,
             "bImgSrc": 1
         },
+        "m_extendfilds": {
+            "bA": "this is a extend fild bA",
+            "bB": "this is a extend fild bB"
+        },
+        "m_extendinit": {
+            "m_comparefild": "_id",
+            "m_comparefildType": "ObjectId",
+            "m_startFrom": "2018-07-20 13:44:00",
+            "m_endTo": "2018-07-20 13:46:59"
+        },
         "m_connection": {
             "m_servers": [
                 "localhost:29031",
@@ -87,17 +97,23 @@ For example:
 
 - **m_database** - MongoDB dataBase to watch.
 - **m_collectionname** - MongoDB collection to watch.
-- **m_filterfilds** - MongoDB filterQuery,support simple filter.(Default value is `null`)
-- **m_returnfilds** - MongoDB need to return to the field.(Default value is `null`)
+- **m_filterfilds** - MongoDB filterQuery,support simple filter.(Default value is `null`).
+- **m_returnfilds** - MongoDB need to return to the field.(Default value is `null`).
+- **m_extendfilds** - MongoDB expand field.(can default key and value).
+- **m_extendinit** - Mongodb initialization supplemental configuration. (Default value is `null`).
+  - **m_comparefild** - MongoDB compare fild.(Default value is `_id` or other).
+  - **m_comparefildType** - MongoDB compare fild type.(Default value is `ObjectId` or `DateTime`).
+  - **m_startFrom** - StartTime.(Default value is a DateTime).
+  - **m_endTo** - EndTime.(Default value is a DateTime).
 - **m_connection**
-  - **m_servers** - MongoDB servers.(Array)
+  - **m_servers** - MongoDB servers.(Array).
   - **m_authentication** - If you do not need to verify the default value is `null`.
     - **username** - MongoDB connection userName.
     - **password** - MongoDB connection passWord.
     - **authsource** - MongoDB user authentication.
     - **replicaset** - MongoDB replicaSet name.
-    - **ssl** - MongoDB ssl.(Default value is `false`)
-- **m_url** - replace `m_connection`(Either-or)
+    - **ssl** - MongoDB ssl.(Default value is `false`).
+- **m_url** - replace `m_connection`(Either-or).
 - **m_documentsinbatch** - An integer that specifies number of documents to send to ElasticSearch in batches (can be set to very high number).
 - **m_delaytime** - Number of milliseconds between batches the default value is `1000`ms.
 - **e_index** - ElasticSearch index where documents from watcher collection is saved.
