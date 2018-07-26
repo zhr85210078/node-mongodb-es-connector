@@ -96,36 +96,36 @@ npm install es-mongodb-sync
 }
 ```
 
-- **m_database** - MongoDB里需要监听的数据库.
-- **m_collectionname** - MongoDB里需要监听的collection.
-- **m_filterfilds** - MongoDB里的查询条件,目前支持一些简单的查询条件.(默认值为`null`).
-- **m_returnfilds** - MongoDB需要返回的字段.(默认值为`null`).
-- **m_extendfilds** - 不在MongoDB里存在的字段,但是需要存储到Elasticsearch的index里.(默认值为`null`).
-- **m_extendinit** - mongodb初始化补充配置.(默认值为`null`).
-  - **m_comparefild** - MongoDB需要比较的字段.(默认值为`_id`或者是其他字段).
-  - **m_comparefildType** - MongoDB需要比较的字段的数据类型.(默认值为`ObjectId`或者是`DateTime`).
-  - **m_startFrom** - 起始时间.(默认值是一个DateTime类型的字符串).
-  - **m_endTo** - 截止时间.(默认值是一个DateTime类型的字符串).
-- **m_connection**
-  - **m_servers** - MongoDB服务器的地址.(replica结构,数组格式).
-  - **m_authentication** - 如果需要MongoDB的登录验证使用下面配置(默认值为`null`).
-    - **username** - MongoDB连接的用户名.
-    - **password** - MongoDB连接的密码.
-    - **authsource** - MongoDB用户认证,默认为`admin`.
-    - **replicaset** - MongoDB的repliac结构的名字.
-    - **ssl** - MongoDB的ssl.(默认值为`false`).
-- **m_url** - 替换`m_connection`节点(二选一).
-- **m_documentsinbatch** - 一次性从mongodb往Elasticsearch里传入数据的条数. (你可以设置比较大的值,默认为1000).
-- **m_delaytime** - 每次进elasticsearch数据的间隔时间(默认值为`1000`ms).
-- **e_index** - ElasticSearch里的index.
-- **e_type** - ElasticSearch里的type,这里的type主要为了使用bulk.
-- **e_connection**
-  - **e_server** - ElasticSearch的连接字符串.
-  - **e_httpauth** - 如果ElasticSearch需要登录验证使用下面配置(默认值为`null`).
-    - **username** - ElasticSearch连接的用户名.
-    - **password** - ElasticSearch连接的密码.
-- **e_pipeline** - ElasticSearch 中pipeline的名称.
-- **e_iscontainattachment** - pipeline是否包含附件规则(默认值为`false`).
+- **m_database** - MongoDB里需要监听的数据库. (<font color="yellow">必须</font>)
+- **m_collectionname** - MongoDB里需要监听的collection. (<font color="yellow">必须</font>)
+- **m_filterfilds** - MongoDB里的查询条件,目前支持一些简单的查询条件.(默认值为`null`). (<font color="yellow">必须</font>)
+- **m_returnfilds** - MongoDB需要返回的字段.(默认值为`null`). (<font color="yellow">必须</font>)
+- **m_extendfilds** - 不在MongoDB里存在的字段,但是需要存储到Elasticsearch的index里.(默认值为`null`). (<font color="cyan">可选</font>)
+- **m_extendinit** - mongodb初始化补充配置.(默认值为`null`). (<font color="cyan">可选</font>)
+  - **m_comparefild** - MongoDB需要比较的字段.(默认值为`_id`或者是其他字段). (<font color="cyan">可选</font>)
+  - **m_comparefildType** - MongoDB需要比较的字段的数据类型.(默认值为`ObjectId`或者是`DateTime`). (<font color="cyan">可选</font>)
+  - **m_startFrom** - 起始时间.(默认值是一个DateTime类型的字符串). (<font color="cyan">可选</font>)
+  - **m_endTo** - 截止时间.(默认值是一个DateTime类型的字符串). (<font color="cyan">可选</font>)
+- **m_connection** (<font color="yellow">必须</font>)
+  - **m_servers** - MongoDB服务器的地址.(replica结构,数组格式). (<font color="yellow">必须</font>)
+  - **m_authentication** - 如果需要MongoDB的登录验证使用下面配置(默认值为`null`). (<font color="yellow">必须</font>)
+    - **username** - MongoDB连接的用户名. (<font color="yellow">必须</font>)
+    - **password** - MongoDB连接的密码. (<font color="yellow">必须</font>)
+    - **authsource** - MongoDB用户认证,默认为`admin`. (<font color="yellow">必须</font>)
+    - **replicaset** - MongoDB的repliac结构的名字. (<font color="yellow">必须</font>)
+    - **ssl** - MongoDB的ssl.(默认值为`false`). (<font color="cyan">可选</font>)
+- **m_url** - 替换`m_connection`节点(二选一). (<font color="cyan">可选</font>)
+- **m_documentsinbatch** - 一次性从mongodb往Elasticsearch里传入数据的条数. (你可以设置比较大的值,默认为1000). (<font color="yellow">必须</font>)
+- **m_delaytime** - 每次进elasticsearch数据的间隔时间(默认值为`1000`ms). (<font color="yellow">必须</font>)
+- **e_index** - ElasticSearch里的index. (<font color="yellow">必须</font>)
+- **e_type** - ElasticSearch里的type,这里的type主要为了使用bulk. (<font color="yellow">必须</font>)
+- **e_connection** (<font color="yellow">必须</font>)
+  - **e_server** - ElasticSearch的连接字符串. (<font color="yellow">必须</font>)
+  - **e_httpauth** - 如果ElasticSearch需要登录验证使用下面配置(默认值为`null`). (<font color="cyan">可选</font>)
+    - **username** - ElasticSearch连接的用户名. (<font color="cyan">可选</font>)
+    - **password** - ElasticSearch连接的密码. (<font color="cyan">可选</font>)
+- **e_pipeline** - ElasticSearch 中pipeline的名称. (<font color="cyan">可选</font>)
+- **e_iscontainattachment** - pipeline是否包含附件规则(默认值为`false`). (<font color="cyan">可选</font>)
 
 ## 如何启动
 
