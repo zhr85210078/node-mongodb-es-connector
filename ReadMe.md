@@ -96,7 +96,7 @@ For example:
 ```
 
 - **m_database** - MongoDB dataBase to watch. (<font color="yellow">required</font>)
-- **m_collectionname** - MongoDB collection to watch. (-->`required`)
+- **m_collectionname** - MongoDB collection to watch. (<font color="yellow">required</font>)
 - **m_filterfilds** - MongoDB filterQuery,support simple filter.(Default value is `null`). (<font color="yellow">required</font>)
 - **m_returnfilds** - MongoDB need to return to the field.(Default value is `null`). (<font color="yellow">required</font>)
 - **m_extendfilds** - MongoDB expand field.(can default key and value). (<font color="cyan">selective</font>)
