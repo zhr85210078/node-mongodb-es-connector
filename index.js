@@ -2,7 +2,7 @@
  * @Author: horan 
  * @Date: 2017-07-09 10:24:53 
  * @Last Modified by: horan
- * @Last Modified time: 2018-07-11 17:39:01
+ * @Last Modified time: 2018-07-31 18:03:07
  * @Api
  */
 
@@ -20,6 +20,10 @@ var start = function (filePath) {
     main.init(getFileList, filePath);
 };
 
+var modifyCurrentFilePath = function (path) {
+    currentFilePath = path;
+}
+
 var addWatcher = function (fileName, obj) {
     var flag = false;
     try {
@@ -31,10 +35,33 @@ var addWatcher = function (fileName, obj) {
                     if ((item.elasticsearch.e_connection.e_server == obj.elasticsearch.e_connection.e_server &&
                             item.elasticsearch.e_index != obj.elasticsearch.e_index) ||
                         (item.elasticsearch.e_connection.e_server != obj.elasticsearch.e_connection.e_server &&
-                            item.elasticsearch.e_index == obj.elasticsearch.e_index)) {
+                            item.elasticsearch.e_index == obj.elasticsearch.e_index) ||
+                        (item.elasticsearch.e_connection.e_server != obj.elasticsearch.e_connection.e_server &&
+                            item.elasticsearch.e_index != obj.elasticsearch.e_index)) {
                         var file = path.join(currentFilePath, fileName + '.json');
                         fs.writeFileSync(file, JSON.stringify(obj));
                         flag = true;
+                        var existInfo = false;
+                        if (global.infoArray && global.infoArray.length > 0) {
+                            _.find(global.infoArray, function (file) {
+                                if (file.cluster === obj.elasticsearch.e_connection.e_server &&
+                                    file.index === obj.elasticsearch.e_index) {
+                                    existInfo = true;
+                                    return;
+                                }
+                            });
+                        }
+                        else{
+                            global.infoArray = [];
+                        }
+                        if (!existInfo) {
+                            var item = {};
+                            item.cluster = obj.elasticsearch.e_connection.e_server;
+                            item.index = obj.elasticsearch.e_index;
+                            item.msg = "";
+                            item.status = "w";
+                            global.infoArray.push(item);
+                        }
                     }
                 }
             });
@@ -59,6 +86,27 @@ var updateWatcher = function (fileName, obj) {
                     var file = path.join(currentFilePath, fileName + '.json');
                     fs.writeFileSync(file, JSON.stringify(obj));
                     flag = true;
+                    var existInfo = false;
+                    if (global.infoArray && global.infoArray.length > 0) {
+                        _.find(global.infoArray, function (file) {
+                            if (file.cluster === obj.elasticsearch.e_connection.e_server &&
+                                file.index === obj.elasticsearch.e_index) {
+                                existInfo = true;
+                                return;
+                            }
+                        });
+                    }
+                    else{
+                        global.infoArray = [];
+                    }
+                    if (!existInfo) {
+                        var item = {};
+                        item.cluster = obj.elasticsearch.e_connection.e_server;
+                        item.index = obj.elasticsearch.e_index;
+                        item.msg = "";
+                        item.status = "w";
+                        global.infoArray.push(item);
+                    }
                 }
             });
         } else {
@@ -140,6 +188,7 @@ var stropTrace = function () {
 
 module.exports = {
     start: start,
+    modifyCurrentFilePath: modifyCurrentFilePath,
     addWatcher: addWatcher,
     updateWatcher: updateWatcher,
     deleteWatcher: deleteWatcher,
