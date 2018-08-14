@@ -8,8 +8,7 @@ Supports one-to-one and one-to-many relationships.
 Chinese Documentation - [中文文档](./README.zh-CN.md)
 
 - **one-to-one** - one mongodb collection to one elasticsearch index
-- **one-to-many** - one mongodb collection to one elasticsearch server many indexs,
-                    or one mongodb collection to many elasticsearch servers one index
+- **one-to-many** - one mongodb collection to one elasticsearch server many indexs, or one mongodb collection to many elasticsearch servers one index
 
 ## my current version
 
@@ -140,11 +139,12 @@ index.js (only crud config json )
 
 [Example](https://github.com/zhr85210078/es-connector-api)
 
-**start()** - must start up before all the APIs.
+**1.start()** - must start up before all the APIs.
 
 ---
 
-**addWatcher()** - add a config json.
+**2.addWatcher()** - add a config json.
+
 Parameters:
 
 | Name     | Type        |
@@ -156,7 +156,8 @@ Parameters:
 
 ---
 
-**updateWatcher()** - update a config json.
+**3.updateWatcher()** - update a config json.
+
 Parameters:
 
 | Name     | Type        |
@@ -168,7 +169,8 @@ Parameters:
 
 ---
 
-**deleteWatcher()** - delete a config json.
+**4.deleteWatcher()** - delete a config json.
+
 Parameters:
 
 | Name     | Type        |
@@ -179,7 +181,8 @@ Parameters:
 
 ---
 
-**isExistWatcher()** - check out this config json exist.
+**5.isExistWatcher()** - check out this config json exist.
+
 Parameters:
 
 | Name     | Type        |
@@ -190,7 +193,7 @@ Parameters:
 
 ---
 
-**getInfoArray()** - get every config status(waiting/initialling/running/stoped).
+**6.getInfoArray()** - get every config status.(waiting/initialling/running/stoped).
 
 ---
 

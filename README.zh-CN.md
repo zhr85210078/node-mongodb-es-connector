@@ -8,8 +8,7 @@
 英文文档 - [English Documentation](./ReadMe.md)
 
 - **一对一** - 一个mongodb的collection对应一个elasticsearch的一个index之间的数据同步
-- **一对多** - 一个mongodb的collection对应一个elasticsearch的多个index之间的数据同步,
-                或者一个mongodb的collection对应多个elasticsearch的一个index之间的数据同步
+- **一对多** - 一个mongodb的collection对应一个elasticsearch的多个index之间的数据同步, 或者一个mongodb的collection对应多个elasticsearch的一个index之间的数据同步
 
 ## 我当前的环境版本
 
@@ -141,11 +140,12 @@ index.js (只用来做配置文件的增删改查)
 
 [例子](https://github.com/zhr85210078/es-connector-api)
 
-**start()** - must start up before all the APIs.
+**1.start()** - must start up before all the APIs.
 
 ---
 
-**addWatcher()** - 增加一个配置文件.
+**2.addWatcher()** - 增加一个配置文件.
+
 传参:
 
 | Name     | Type        |
@@ -157,7 +157,8 @@ index.js (只用来做配置文件的增删改查)
 
 ---
 
-**updateWatcher()** - 修改一个配置文件.
+**3.updateWatcher()** - 修改一个配置文件.
+
 传参:
 
 | Name     | Type        |
@@ -169,7 +170,8 @@ index.js (只用来做配置文件的增删改查)
 
 ---
 
-**deleteWatcher()** - 删除一个配置文件.
+**4.deleteWatcher()** - 删除一个配置文件.
+
 传参:
 
 | Name     | Type        |
@@ -180,7 +182,8 @@ index.js (只用来做配置文件的增删改查)
 
 ---
 
-**isExistWatcher()** - 检查当前配置文件是否存在.
+**5.isExistWatcher()** - 检查当前配置文件是否存在.
+
 传参:
 
 | Name     | Type        |
@@ -191,7 +194,7 @@ index.js (只用来做配置文件的增删改查)
 
 ---
 
-**getInfoArray()** - 获取每个配置文件的当前状态(waiting/initialling/running/stoped).
+**6.getInfoArray()** - 获取每个配置文件的当前状态.(waiting/initialling/running/stoped).
 
 ---
 
