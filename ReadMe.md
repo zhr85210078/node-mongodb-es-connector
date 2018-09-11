@@ -1,6 +1,6 @@
 # node-mongodb-es-connector
 
-ElasticSearch and MongoDB sync module for node (support attachment sync)
+MongoDB and ElasticSearch sync module for node (support attachment sync)
 ![structure]
 
 Supports one-to-one and one-to-many relationships.

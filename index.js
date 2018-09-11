@@ -2,13 +2,15 @@
  * @Author: horan 
  * @Date: 2017-07-09 10:24:53 
  * @Last Modified by: horan
- * @Last Modified time: 2018-07-31 18:03:07
+ * @Last Modified time: 2018-08-28 15:22:42
  * @Api
  */
 
 var _ = require('underscore');
 var fs = require('fs');
 var path = require("path");
+var moment = require('moment');
+var appRoot = require('app-root-path');
 var logger = require('./lib/util/logger.js');
 var main = require('./lib/main');
 var currentFilePath = "";
@@ -50,8 +52,7 @@ var addWatcher = function (fileName, obj) {
                                     return;
                                 }
                             });
-                        }
-                        else{
+                        } else {
                             global.infoArray = [];
                         }
                         if (!existInfo) {
@@ -95,8 +96,7 @@ var updateWatcher = function (fileName, obj) {
                                 return;
                             }
                         });
-                    }
-                    else{
+                    } else {
                         global.infoArray = [];
                     }
                     if (!existInfo) {
@@ -172,6 +172,10 @@ var isExistWatcher = function (fileName) {
 
 var getInfoArray = function () {
     if (global.infoArray) {
+        var newDate = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+        var filePath = path.join(appRoot.path, "logs/status.log");
+        var jsonData = newDate + " " + JSON.stringify(global.infoArray);
+        fs.writeFileSync(filePath, jsonData);
         return global.infoArray;
     } else {
         return null;
