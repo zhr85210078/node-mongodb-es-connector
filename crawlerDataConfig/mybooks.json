@@ -17,8 +17,8 @@
         "m_extendinit": {
             "m_comparefild": "_id",
             "m_comparefildType": "ObjectId",
-            "m_startFrom": "2018-07-20 13:44:00",
-            "m_endTo": "2018-07-20 13:46:59"
+            "m_startFrom": "2018-09-17 13:44:00",
+            "m_endTo": "2018-09-17 16:27:51"
         },
         "m_connection": {
             "m_servers": [
@@ -34,7 +34,7 @@
                 "ssl": false
             }
         },
-        "m_url": "mongodb://UserAdmin:pass1234@localhost:29031,localhost:29032,localhost:29033/myTest?authSource=admin&replicaSet=my_replica",
+        "m_url": "mongodb://UserAdmin:pass1234@localhost:29031,localhost:29032,localhost:29033/myTest?authSource=admin&replicaSet=my_replica&readPreference=secondary&maxStalenessSeconds=120",
         "m_documentsinbatch": 5000,
         "m_delaytime": 1000
     },

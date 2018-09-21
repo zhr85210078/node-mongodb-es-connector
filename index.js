@@ -2,7 +2,7 @@
  * @Author: horan 
  * @Date: 2017-07-09 10:24:53 
  * @Last Modified by: horan
- * @Last Modified time: 2018-08-28 15:22:42
+ * @Last Modified time: 2018-09-21 14:30:09
  * @Api
  */
 
@@ -17,7 +17,7 @@ var currentFilePath = "";
 
 var start = function (filePath) {
     currentFilePath = filePath;
-    var getFileList = require('./lib/util/util').readFileList(filePath, []);
+    var getFileList = require('./lib/util/util').readFileList(filePath, [], ".json");
     require('./lib/util/util').createInfoArray(getFileList);
     main.init(getFileList, filePath);
 };
@@ -42,6 +42,9 @@ var addWatcher = function (fileName, obj) {
                             item.elasticsearch.e_index != obj.elasticsearch.e_index)) {
                         var file = path.join(currentFilePath, fileName + '.json');
                         fs.writeFileSync(file, JSON.stringify(obj));
+                        if(fs.existsSync(path.join(currentFilePath, fileName + '.timestamp'))){
+                            fs.unlinkSync(path.join(currentFilePath, fileName + '.timestamp'));
+                        }
                         flag = true;
                         var existInfo = false;
                         if (global.infoArray && global.infoArray.length > 0) {
@@ -69,6 +72,9 @@ var addWatcher = function (fileName, obj) {
         } else {
             var file = path.join(currentFilePath, fileName + '.json');
             fs.writeFileSync(file, JSON.stringify(obj));
+            if(fs.existsSync(path.join(currentFilePath, fileName + '.timestamp'))){
+                fs.unlinkSync(path.join(currentFilePath, fileName + '.timestamp'));
+            }
             flag = true;
         }
         return flag;
@@ -86,6 +92,9 @@ var updateWatcher = function (fileName, obj) {
                 if ((fileName + '.json') === name) {
                     var file = path.join(currentFilePath, fileName + '.json');
                     fs.writeFileSync(file, JSON.stringify(obj));
+                    if(fs.existsSync(path.join(currentFilePath, fileName + '.timestamp'))){
+                        fs.unlinkSync(path.join(currentFilePath, fileName + '.timestamp'));
+                    }
                     flag = true;
                     var existInfo = false;
                     if (global.infoArray && global.infoArray.length > 0) {
@@ -112,6 +121,9 @@ var updateWatcher = function (fileName, obj) {
         } else {
             var file = path.join(currentFilePath, fileName + '.json');
             fs.writeFileSync(file, JSON.stringify(obj));
+            if(fs.existsSync(path.join(currentFilePath, fileName + '.timestamp'))){
+                fs.unlinkSync(path.join(currentFilePath, fileName + '.timestamp'));
+            }
             flag = true;
         }
         return flag;
@@ -130,8 +142,13 @@ var deleteWatcher = function (fileName) {
             files.forEach(function (name) {
                 if (fileNameTotal === name) {
                     var currentFileContent = require(path.join(currentFilePath, name));
-                    fs.unlinkSync(path.join(currentFilePath, name));
-                    flag = true;
+                    if(fs.existsSync(path.join(currentFilePath, name))){
+                        fs.unlinkSync(path.join(currentFilePath,name));
+                        if(fs.existsSync(path.join(filePath, fileName + '.timestamp'))){
+                            fs.unlinkSync(path.join(filePath, fileName + '.timestamp'));
+                        }
+                        flag = true;
+                    }
                     if (global.infoArray && global.infoArray.length > 0) {
                         _.find(global.infoArray, function (file) {
                             if (file.cluster === currentFileContent.elasticsearch.e_connection.e_server &&

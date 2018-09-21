@@ -21,9 +21,9 @@ assert(true); // OK
 //     };
 //     var masterDoc = {
 //         "_id": item.id,
-//         "cName": "name" + i,
-//         "cPrice": i * 1000,
-//         "cImgSrc": "大型网站技术架构：核心原理与案例分析.pdf",
+//         "bName": "name" + i,
+//         "bPrice": i * 1000,
+//         "bImgSrc": "大型网站技术架构：核心原理与案例分析.pdf",
 //         "version": "2.0"
 //     };
 //     item.masterDocArray = [];
@@ -33,7 +33,7 @@ assert(true); // OK
 
 // Promise.reduce(dataList, function (total, item, index) {
 //     return new Promise(function (resolve, reject) {
-//         setTimeout(function () {
+//         //setTimeout(function () {
 //             mongoPromise.insertGridFsStreams(mongoUrl, item.metadata, filePath).then(function (result) {
 //                 if (result) {
 //                     mongoPromise.insertData(mongoUrl, "books", item.masterDocArray).then(function (result) {
@@ -42,7 +42,7 @@ assert(true); // OK
 //                     });
 //                 }
 //             });
-//         }, 5000);
+//         //}, 5000);
 //     });
 // }, 0).then(function (result) {
 //     console.log("end");
