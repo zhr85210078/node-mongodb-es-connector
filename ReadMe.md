@@ -206,7 +206,7 @@ Parameters:
 - **v2.1.1** - update init method (master doc->attachment).
 - **v2.1.8** - use promise queue (init and mongo-oplog).
 - **v2.1.9** - add `m_extendfilds` and `m_extendinit`.
-- **v2.1.15** - add timed task about watch mongodb, add timestamp for init data, cancel full data synchronization in init.
+- **v2.1.16** - add timed task about watch mongodb, add timestamp for init data, cancel full data synchronization in init.
 
 ## How to use pipeline
 
