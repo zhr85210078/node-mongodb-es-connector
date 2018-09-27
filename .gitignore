@@ -1,6 +1,6 @@
 .vscode
 node_modules
-crawlerDataConfig/*.timestamp
+crawlerData/*.timestamp
 logs/*.log
 logs/error/*.log
 logs/info/*.log

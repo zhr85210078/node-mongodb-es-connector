@@ -30,10 +30,10 @@ npm install es-mongodb-sync
 
 ## 简单的例子
 
-创建在**crawlerDataConfig**文件目录下创建一个js文件,命名规则如下:
+创建在**crawlerData**文件目录下创建一个js文件,命名规则如下:
 `ElasticSearchIndexName.json`,或者任意名称`.json`..
 
-如果你需要更多的配置文件需要在`crawlerDataConfig`目录下创建.
+如果你需要更多的配置文件需要在`crawlerData`目录下创建.
 
 例子:
 

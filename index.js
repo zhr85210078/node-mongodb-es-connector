@@ -2,7 +2,7 @@
  * @Author: horan 
  * @Date: 2017-07-09 10:24:53 
  * @Last Modified by: horan
- * @Last Modified time: 2018-09-21 14:30:09
+ * @Last Modified time: 2018-09-26 18:28:31
  * @Api
  */
 
@@ -13,70 +13,42 @@ var moment = require('moment');
 var appRoot = require('app-root-path');
 var logger = require('./lib/util/logger.js');
 var main = require('./lib/main');
-var currentFilePath = "";
+var filePath = path.join(appRoot.path, "crawlerData");
 
-var start = function (filePath) {
-    currentFilePath = filePath;
+var start = function () {
     var getFileList = require('./lib/util/util').readFileList(filePath, [], ".json");
     require('./lib/util/util').createInfoArray(getFileList);
     main.init(getFileList, filePath);
 };
 
-var modifyCurrentFilePath = function (path) {
-    currentFilePath = path;
-}
-
 var addWatcher = function (fileName, obj) {
     var flag = false;
     try {
-        var files = fs.readdirSync(currentFilePath);
-        if (files && files.length > 0) {
-            files.forEach(function (name) {
-                var item = JSON.parse(fs.readFileSync(path.join(currentFilePath, name)));
-                if ((fileName + '.json') !== name) {
-                    if ((item.elasticsearch.e_connection.e_server == obj.elasticsearch.e_connection.e_server &&
-                            item.elasticsearch.e_index != obj.elasticsearch.e_index) ||
-                        (item.elasticsearch.e_connection.e_server != obj.elasticsearch.e_connection.e_server &&
-                            item.elasticsearch.e_index == obj.elasticsearch.e_index) ||
-                        (item.elasticsearch.e_connection.e_server != obj.elasticsearch.e_connection.e_server &&
-                            item.elasticsearch.e_index != obj.elasticsearch.e_index)) {
-                        var file = path.join(currentFilePath, fileName + '.json');
-                        fs.writeFileSync(file, JSON.stringify(obj));
-                        if(fs.existsSync(path.join(currentFilePath, fileName + '.timestamp'))){
-                            fs.unlinkSync(path.join(currentFilePath, fileName + '.timestamp'));
-                        }
-                        flag = true;
-                        var existInfo = false;
-                        if (global.infoArray && global.infoArray.length > 0) {
-                            _.find(global.infoArray, function (file) {
-                                if (file.cluster === obj.elasticsearch.e_connection.e_server &&
-                                    file.index === obj.elasticsearch.e_index) {
-                                    existInfo = true;
-                                    return;
-                                }
-                            });
-                        } else {
-                            global.infoArray = [];
-                        }
-                        if (!existInfo) {
-                            var item = {};
-                            item.cluster = obj.elasticsearch.e_connection.e_server;
-                            item.index = obj.elasticsearch.e_index;
-                            item.msg = "";
-                            item.status = "w";
-                            global.infoArray.push(item);
-                        }
-                    }
+        fs.writeFileSync(path.join(filePath, fileName + '.json'), JSON.stringify(obj));
+        if (fs.existsSync(path.join(filePath, fileName + '.timestamp'))) {
+            fs.unlinkSync(path.join(filePath, fileName + '.timestamp'));
+        }
+        var existInfo = false;
+        if (global.infoArray && global.infoArray.length > 0) {
+            _.find(global.infoArray, function (file) {
+                if (file.cluster === obj.elasticsearch.e_connection.e_server &&
+                    file.index === obj.elasticsearch.e_index) {
+                    existInfo = true;
+                    return;
                 }
             });
         } else {
-            var file = path.join(currentFilePath, fileName + '.json');
-            fs.writeFileSync(file, JSON.stringify(obj));
-            if(fs.existsSync(path.join(currentFilePath, fileName + '.timestamp'))){
-                fs.unlinkSync(path.join(currentFilePath, fileName + '.timestamp'));
-            }
-            flag = true;
+            global.infoArray = [];
         }
+        if (!existInfo) {
+            var item = {};
+            item.cluster = obj.elasticsearch.e_connection.e_server;
+            item.index = obj.elasticsearch.e_index;
+            item.msg = "";
+            item.status = "w";
+            global.infoArray.push(item);
+        }
+        flag = true;
         return flag;
     } catch (error) {
         logger.errMethod(obj.elasticsearch.e_connection.e_server, obj.elasticsearch.e_index, "addWatcher error: " + error);
@@ -86,46 +58,31 @@ var addWatcher = function (fileName, obj) {
 var updateWatcher = function (fileName, obj) {
     var flag = false;
     try {
-        var files = fs.readdirSync(currentFilePath);
-        if (files && files.length > 0) {
-            files.forEach(function (name) {
-                if ((fileName + '.json') === name) {
-                    var file = path.join(currentFilePath, fileName + '.json');
-                    fs.writeFileSync(file, JSON.stringify(obj));
-                    if(fs.existsSync(path.join(currentFilePath, fileName + '.timestamp'))){
-                        fs.unlinkSync(path.join(currentFilePath, fileName + '.timestamp'));
-                    }
-                    flag = true;
-                    var existInfo = false;
-                    if (global.infoArray && global.infoArray.length > 0) {
-                        _.find(global.infoArray, function (file) {
-                            if (file.cluster === obj.elasticsearch.e_connection.e_server &&
-                                file.index === obj.elasticsearch.e_index) {
-                                existInfo = true;
-                                return;
-                            }
-                        });
-                    } else {
-                        global.infoArray = [];
-                    }
-                    if (!existInfo) {
-                        var item = {};
-                        item.cluster = obj.elasticsearch.e_connection.e_server;
-                        item.index = obj.elasticsearch.e_index;
-                        item.msg = "";
-                        item.status = "w";
-                        global.infoArray.push(item);
-                    }
+        fs.writeFileSync(path.join(filePath, fileName + '.json'), JSON.stringify(obj));
+        if (fs.existsSync(path.join(filePath, fileName + '.timestamp'))) {
+            fs.unlinkSync(path.join(filePath, fileName + '.timestamp'));
+        }
+        var existInfo = false;
+        if (global.infoArray && global.infoArray.length > 0) {
+            _.find(global.infoArray, function (file) {
+                if (file.cluster === obj.elasticsearch.e_connection.e_server &&
+                    file.index === obj.elasticsearch.e_index) {
+                    existInfo = true;
+                    return;
                 }
             });
         } else {
-            var file = path.join(currentFilePath, fileName + '.json');
-            fs.writeFileSync(file, JSON.stringify(obj));
-            if(fs.existsSync(path.join(currentFilePath, fileName + '.timestamp'))){
-                fs.unlinkSync(path.join(currentFilePath, fileName + '.timestamp'));
-            }
-            flag = true;
+            global.infoArray = [];
         }
+        if (!existInfo) {
+            var item = {};
+            item.cluster = obj.elasticsearch.e_connection.e_server;
+            item.index = obj.elasticsearch.e_index;
+            item.msg = "";
+            item.status = "w";
+            global.infoArray.push(item);
+        }
+        flag = true;
         return flag;
     } catch (error) {
         logger.errMethod(obj.elasticsearch.e_connection.e_server, obj.elasticsearch.e_index, "updateWatcher error: " + error);
@@ -134,34 +91,27 @@ var updateWatcher = function (fileName, obj) {
 
 var deleteWatcher = function (fileName) {
     var flag = false;
-    var fileNameTotal = fileName + '.json';
+    var newArray = [];
+    var currentFileContent = require(path.join(filePath, fileName + '.json'));
     try {
-        var files = fs.readdirSync(currentFilePath);
-        if (files && files.length > 0) {
-            var newArray = [];
-            files.forEach(function (name) {
-                if (fileNameTotal === name) {
-                    var currentFileContent = require(path.join(currentFilePath, name));
-                    if(fs.existsSync(path.join(currentFilePath, name))){
-                        fs.unlinkSync(path.join(currentFilePath,name));
-                        if(fs.existsSync(path.join(filePath, fileName + '.timestamp'))){
-                            fs.unlinkSync(path.join(filePath, fileName + '.timestamp'));
-                        }
-                        flag = true;
+        if (isExistWatcher(fileName)) {
+            if (global.infoArray && global.infoArray.length > 0) {
+                _.find(global.infoArray, function (file) {
+                    if (file.cluster === currentFileContent.elasticsearch.e_connection.e_server &&
+                        file.index === currentFileContent.elasticsearch.e_index) {
+                        return;
+                    } else {
+                        newArray.push(file);
                     }
-                    if (global.infoArray && global.infoArray.length > 0) {
-                        _.find(global.infoArray, function (file) {
-                            if (file.cluster === currentFileContent.elasticsearch.e_connection.e_server &&
-                                file.index === currentFileContent.elasticsearch.e_index) {
-                                return;
-                            } else {
-                                newArray.push(file);
-                            }
-                        });
-                    }
-                }
-            });
+                });
+            }
             global.infoArray = newArray;
+            fs.unlinkSync(path.join(filePath, fileName + '.json'));
+            if (fs.existsSync(path.join(filePath, fileName + '.timestamp'))) {
+                fs.unlinkSync(path.join(filePath, fileName + '.timestamp'));
+            }
+            flag = true;
+            return flag;
         }
         return flag;
     } catch (error) {
@@ -171,15 +121,9 @@ var deleteWatcher = function (fileName) {
 
 var isExistWatcher = function (fileName) {
     var flag = false;
-    var fileNameTotal = fileName + '.json';
     try {
-        var files = fs.readdirSync(currentFilePath);
-        if (files && files.length > 0) {
-            files.forEach(function (name) {
-                if (fileNameTotal === name) {
-                    flag = true;
-                }
-            });
+        if (fs.existsSync(path.join(filePath, fileName + '.json'))) {
+            flag = true;
         }
         return flag;
     } catch (error) {
@@ -209,7 +153,6 @@ var stropTrace = function () {
 
 module.exports = {
     start: start,
-    modifyCurrentFilePath: modifyCurrentFilePath,
     addWatcher: addWatcher,
     updateWatcher: updateWatcher,
     deleteWatcher: deleteWatcher,

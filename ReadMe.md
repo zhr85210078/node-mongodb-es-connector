@@ -30,9 +30,9 @@ or [Download](https://github.com/zhr85210078/node-mongodb-es-connector/tree/mast
 
 ## Sample usage
 
-Create a file in the **crawlerDataConfig** folder,the Naming rules is `ElasticSearchIndexName.json` or any name `.json`.
+Create a file in the **crawlerData** folder,the Naming rules is `ElasticSearchIndexName.json` or any name `.json`.
 
-If you have more additional configuration in the `crawlerDataConfig` folder.
+If you have more additional configuration in the `crawlerData` folder.
 
 For example:
 
