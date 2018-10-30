@@ -2,7 +2,7 @@
  * @Author: horan 
  * @Date: 2017-07-09 10:24:53 
  * @Last Modified by: horan
- * @Last Modified time: 2018-09-26 18:28:31
+ * @Last Modified time: 2018-10-25 14:21:17
  * @Api
  */
 
@@ -92,9 +92,9 @@ var updateWatcher = function (fileName, obj) {
 var deleteWatcher = function (fileName) {
     var flag = false;
     var newArray = [];
-    var currentFileContent = require(path.join(filePath, fileName + '.json'));
     try {
         if (isExistWatcher(fileName)) {
+            var currentFileContent = require(path.join(filePath, fileName + '.json'));
             if (global.infoArray && global.infoArray.length > 0) {
                 _.find(global.infoArray, function (file) {
                     if (file.cluster === currentFileContent.elasticsearch.e_connection.e_server &&
