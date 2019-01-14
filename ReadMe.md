@@ -82,7 +82,7 @@ For example:
         "e_index": "mybooks",
         "e_type": "books",
         "e_connection": {
-            "e_server": "http://localhost:9200",
+            "e_server": "http://localhost1:9200,http://localhost2:9200,http://localhost3:9200",
             "e_httpauth": {
                 "username": "EsAdmin",
                 "password": "pass1234"
@@ -207,6 +207,7 @@ Parameters:
 - **v2.1.8** - use promise queue (init and mongo-oplog).
 - **v2.1.9** - add `m_extendfilds` and `m_extendinit`.
 - **v2.1.16** - add timed task about watch mongodb, add timestamp for init data, cancel full data synchronization in init.
+- **v2.1.20** - support elasticsearch cluster synchronization.
 
 ## How to use pipeline
 
