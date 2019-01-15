@@ -209,6 +209,7 @@ index.js (只用来做配置文件的增删改查)
 - **v2.1.9** - 增加了 `m_extendfilds`节点和 `m_extendinit`节点.
 - **v2.1.16** - 增加了监听mongodb断开连接的定时任务, 增加了重启服务根据时间戳初始化数据, 取消初始化全量同步.
 - **v2.1.20** - 支持elasticsearch集群的数据同步.
+- **v2.1.21** - 支持配置文件加密.
 
 ## 如何使用elasticsearch的pipeline
 

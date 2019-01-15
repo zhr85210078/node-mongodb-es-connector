@@ -208,6 +208,7 @@ Parameters:
 - **v2.1.9** - add `m_extendfilds` and `m_extendinit`.
 - **v2.1.16** - add timed task about watch mongodb, add timestamp for init data, cancel full data synchronization in init.
 - **v2.1.20** - support elasticsearch cluster synchronization.
+- **v2.1.21** - support configuration file encryption.
 
 ## How to use pipeline
 

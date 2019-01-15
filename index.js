@@ -2,7 +2,7 @@
  * @Author: horan 
  * @Date: 2017-07-09 10:24:53 
  * @Last Modified by: horan
- * @Last Modified time: 2018-10-25 14:21:17
+ * @Last Modified time: 2019-01-15 10:35:10
  * @Api
  */
 
@@ -13,6 +13,7 @@ var moment = require('moment');
 var appRoot = require('app-root-path');
 var logger = require('./lib/util/logger.js');
 var main = require('./lib/main');
+var ase = require("./lib/util/ase");
 var filePath = path.join(appRoot.path, "crawlerData");
 
 var start = function () {
@@ -21,10 +22,16 @@ var start = function () {
     main.init(getFileList, filePath);
 };
 
-var addWatcher = function (fileName, obj) {
+var addWatcher = function (fileName, obj, isAse) {
     var flag = false;
     try {
-        fs.writeFileSync(path.join(filePath, fileName + '.json'), JSON.stringify(obj));
+        var objStr = "";
+        if (isAse) {
+            objStr = ase.aesEncrypt(JSON.stringify(obj), "pwd");
+        } else {
+            objStr = JSON.stringify(obj);
+        }
+        fs.writeFileSync(path.join(filePath, fileName + '.json'), objStr);
         if (fs.existsSync(path.join(filePath, fileName + '.timestamp'))) {
             fs.unlinkSync(path.join(filePath, fileName + '.timestamp'));
         }
@@ -55,10 +62,15 @@ var addWatcher = function (fileName, obj) {
     }
 };
 
-var updateWatcher = function (fileName, obj) {
+var updateWatcher = function (fileName, obj, isAse) {
     var flag = false;
     try {
-        fs.writeFileSync(path.join(filePath, fileName + '.json'), JSON.stringify(obj));
+        if (isAse) {
+            objStr = ase.aesEncrypt(JSON.stringify(obj), "pwd");
+        } else {
+            objStr = JSON.stringify(obj);
+        }
+        fs.writeFileSync(path.join(filePath, fileName + '.json'), objStr);
         if (fs.existsSync(path.join(filePath, fileName + '.timestamp'))) {
             fs.unlinkSync(path.join(filePath, fileName + '.timestamp'));
         }
