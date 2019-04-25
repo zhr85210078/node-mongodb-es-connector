@@ -77,7 +77,8 @@ npm install es-mongodb-sync
             }
         },
         "m_documentsinbatch": 5000,
-        "m_delaytime": 1000
+        "m_delaytime": 1000,
+        "max_attachment_size":5242880
     },
     "elasticsearch": {
         "e_index": "mybooks",
@@ -90,7 +91,9 @@ npm install es-mongodb-sync
             }
         },
         "e_pipeline": "mypipeline",
-        "e_iscontainattachment": true
+        "e_iscontainattachment": true,
+        "refresh_interval": "30s",
+        "number_of_replicas": 1
     }
 }
 ```
@@ -116,6 +119,7 @@ npm install es-mongodb-sync
 - **m_url** - 替换`m_connection`节点(二选一). (**可选**)
 - **m_documentsinbatch** - 一次性从mongodb往Elasticsearch里传入数据的条数. (你可以设置比较大的值,默认为1000). (**必须**)
 - **m_delaytime** - 每次进elasticsearch数据的间隔时间(默认值为`1000`ms). (**必须**)
+- **max_attachment_size** - 每个索引对应附件的最大字节数(默认值为`5242880`byte. (**可选**)
 - **e_index** - ElasticSearch里的index. (**必须**)
 - **e_type** - ElasticSearch里的type,这里的type主要为了使用bulk. (**必须**)
 - **e_connection** (**必须**)
@@ -125,6 +129,8 @@ npm install es-mongodb-sync
     - **password** - ElasticSearch连接的密码. (**可选**)
 - **e_pipeline** - ElasticSearch 中pipeline的名称. (**可选**)
 - **e_iscontainattachment** - pipeline是否包含附件规则(默认值为`false`). (**可选**)
+- **refresh_interval** - ElasticSearch里的index刷新时间(默认值为`30s`). (**selective**)
+- **number_of_replicas** - ElasticSearch里的index副本(默认值为`1`). (**selective**)
 
 ## 如何启动
 

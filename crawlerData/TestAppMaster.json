@@ -1,0 +1,44 @@
+{
+    "mongodb": {
+        "m_database": "ABC",
+        "m_collectionname": "AppMaster",
+        "m_filterfilds": null,
+        "m_returnfilds": {
+            "__RequestVerificationToken": 1,
+            "Name": 1,
+            "C4-CreateDate": 1
+        },
+        "m_connection": {
+            "m_servers": [
+                "HKDBSDWV002:29031",
+                "HKDBSDWV002:29032",
+                "HKDBSDWV002:29033"
+            ],
+            "m_authentication": {
+                "username": "siteRootAdmin",
+                "password": "pass1234",
+                "authsource": "admin",
+                "replicaset": "rs_ExceedNotes_DEV",
+                "ssl": false
+            }
+        },
+        "m_documentsinbatch": 500,
+        "m_delaytime": 1000,
+        "max_attachment_size":5242880
+    },
+    "elasticsearch": {
+        "e_index": "testappmasters",
+        "e_type": "testappmaster",
+        "e_connection": {
+            "e_server": "https://cnpekappdwv049:9500/",
+            "e_httpauth": {
+                "username": "MasterSiteAdmin",
+                "password": "P@ss1234"
+            }
+        },
+        "e_pipeline": "doc_search_attachment",
+        "e_iscontainattachment": true,
+        "refresh_interval":"30s",
+        "number_of_replicas": 1
+    }
+}

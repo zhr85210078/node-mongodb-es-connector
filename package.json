@@ -1,11 +1,12 @@
 {
   "name": "es-mongodb-sync",
-  "version": "2.1.24",
+  "version": "2.1.25",
   "description": "nodejs mongodb elasticsearch synchrodata",
   "main": "app.js",
   "scripts": {
     "start": "node --max-old-space-size=4096 app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docsify": "docsify serve docs"
   },
   "author": "horan",
   "contributors": [
@@ -17,22 +18,23 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "app-root-path": "^2.1.0",
-    "bluebird": "^3.5.1",
+    "app-root-path": "^2.2.1",
+    "bluebird": "^3.5.4",
     "crypto-browserify": "^3.12.0",
-    "dot-object": "^1.7.0",
-    "elasticsearch": "^14.2.2",
+    "dot-object": "^1.7.1",
+    "elasticsearch": "^15.4.1",
     "gridfs-stream": "^1.1.1",
-    "moment": "^2.22.1",
-    "mongo-oplog": "^2.1.0",
-    "mongodb": "^2.2.35",
-    "node-cron": "^2.0.1",
-    "promise-queue-plus": "^1.1.0",
-    "sane": "^3.0.0",
+    "moment": "^2.24.0",
+    "mongo-oplog": "^2.1.4",
+    "mongodb": "^3.2.3",
+    "n-readlines": "^1.0.0",
+    "node-cron": "^2.0.3",
+    "promise-queue-plus": "^1.2.2",
+    "sane": "^4.1.0",
     "stream-to-promise": "^2.2.0",
-    "underscore": "^1.8.3",
-    "winston": "^2.4.2",
-    "winston-daily-rotate-file": "^1.7.2"
+    "underscore": "^1.9.1",
+    "winston": "^3.2.1",
+    "winston-daily-rotate-file": "^3.8.0"
   },
   "keywords": [
     "elastic",

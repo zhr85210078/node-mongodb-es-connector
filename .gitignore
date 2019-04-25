@@ -5,5 +5,8 @@ logs/*.log
 logs/error/*.log
 logs/info/*.log
 logs/trace/*.txt
+logs/error/*.json
+logs/info/*.json
+logs/trace/*.json
 
 .history/*

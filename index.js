@@ -2,7 +2,7 @@
  * @Author: horan 
  * @Date: 2017-07-09 10:24:53 
  * @Last Modified by: horan
- * @Last Modified time: 2019-01-15 10:35:10
+ * @Last Modified time: 2019-03-13 10:28:17
  * @Api
  */
 
@@ -58,7 +58,10 @@ var addWatcher = function (fileName, obj, isAse) {
         flag = true;
         return flag;
     } catch (error) {
-        logger.errMethod(obj.elasticsearch.e_connection.e_server, obj.elasticsearch.e_index, "addWatcher error: " + error);
+        logger.logMethod('error',
+            obj.elasticsearch.e_connection.e_server,
+            obj.elasticsearch.e_index,
+            'AddWatcher error: ' + error);
     }
 };
 
@@ -97,7 +100,10 @@ var updateWatcher = function (fileName, obj, isAse) {
         flag = true;
         return flag;
     } catch (error) {
-        logger.errMethod(obj.elasticsearch.e_connection.e_server, obj.elasticsearch.e_index, "updateWatcher error: " + error);
+        logger.logMethod('error',
+            obj.elasticsearch.e_connection.e_server,
+            obj.elasticsearch.e_index,
+            'UpdateWatcher error: ' + error);
     }
 };
 
@@ -127,7 +133,10 @@ var deleteWatcher = function (fileName) {
         }
         return flag;
     } catch (error) {
-        logger.errMethod("", "", "deleteWatcher error: " + error);
+        logger.logMethod('error',
+            '',
+            '',
+            'DeleteWatcher error: ' + error);
     }
 };
 
@@ -139,7 +148,10 @@ var isExistWatcher = function (fileName) {
         }
         return flag;
     } catch (error) {
-        logger.errMethod("", "", "isExistWatcher error: " + error);
+        logger.logMethod('error',
+            '',
+            '',
+            'IsExistWatcher error: ' + error);
     }
 };
 
@@ -163,6 +175,10 @@ var stropTrace = function () {
     return global.isTrace = false;
 }
 
+var readLog = function (type, date, e_server, e_index) {
+    return require('./lib/util/util').readLog(type, date, e_server, e_index);
+}
+
 module.exports = {
     start: start,
     addWatcher: addWatcher,
@@ -171,5 +187,6 @@ module.exports = {
     isExistWatcher: isExistWatcher,
     getInfoArray: getInfoArray,
     startTrace: startTrace,
-    stropTrace: stropTrace
+    stropTrace: stropTrace,
+    readLog: readLog
 };
