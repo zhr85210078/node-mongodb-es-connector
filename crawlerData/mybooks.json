@@ -1,0 +1,57 @@
+{
+    "mongodb": {
+        "m_database": "myTest",
+        "m_collectionname": "books",
+        "m_filterfilds": {
+            "version": "2.0"
+        },
+        "m_returnfilds": {
+            "bName": 1,
+            "bPrice": 1,
+            "bImgSrc": 1
+        },
+        "m_extendfilds": {
+            "bA": "this is a extend fild bA",
+            "bB": "this is a extend fild bB"
+        },
+        "m_extendinit": {
+            "m_comparefild": "_id",
+            "m_comparefildType": "ObjectId",
+            "m_startFrom": "2018-09-17 13:44:00",
+            "m_endTo": "2018-09-17 16:27:51"
+        },
+        "m_connection": {
+            "m_servers": [
+                "localhost:29031",
+                "localhost:29032",
+                "localhost:29033"
+            ],
+            "m_authentication": {
+                "username": "UserAdmin",
+                "password": "pass1234",
+                "authsource": "admin",
+                "replicaset": "my_replica",
+                "ssl": false
+            }
+        },
+        "m_url": "mongodb://UserAdmin:pass1234@localhost:29031,localhost:29032,localhost:29033/myTest?authSource=admin&replicaSet=my_replica",
+        "m_documentsinbatch": 5000,
+        "m_delaytime": 1000,
+        "max_attachment_size":5242880
+    },
+    "elasticsearch": {
+        "e_index": "mybooks",
+        "e_type": "books",
+        "e_connection": {
+            "e_server": "http://localhost:9200",
+            "e_httpauth": {
+                "username": "EsAdmin",
+                "password": "pass1234"
+            }
+        },
+        "e_pipeline": "mypipeline",
+        "e_iscontainattachment": true,
+        "refresh_interval": "30s",
+        "number_of_replicas": 1
+    }
+}
