@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+        <title>node-mongodb-es-connector</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+        <link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        
+        <script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+    </head>
+    <body>
+        <h1 id="node-mongodb-es-connector">node-mongodb-es-connector</h1>
+<p>基于nodejs的用来实现mongodb和ElasticSearch之间的数据实时同步 (支持附件同步)
+<img src="file:///c:\Users\Haoran Zhang\Documents\My\code\pwccode\node-mongodb-es-connector\test\img\structure.jpg" alt="structure" title="structure"></p>
+<p>支持一对一,一对多的数据传输方式.</p>
+<p>英文文档 - <a href="./ReadMe.md">English Documentation</a></p>
+<ul>
+<li><strong>一对一</strong> - 一个mongodb的collection对应一个elasticsearch的一个index之间的数据同步</li>
+<li><strong>一对多</strong> - 一个mongodb的collection对应一个elasticsearch的多个index之间的数据同步, 或者一个mongodb的collection对应多个elasticsearch的一个index之间的数据同步</li>
+</ul>
+<h2 id="%E6%88%91%E5%BD%93%E5%89%8D%E7%9A%84%E7%8E%AF%E5%A2%83%E7%89%88%E6%9C%AC">我当前的环境版本</h2>
+<pre><code>elasticsearch: v6.1.2
+mongodb: v3.6.2
+Nodejs: v8.9.3
+</code></pre>
+<h2 id="%E8%BF%99%E4%B8%AA%E5%B7%A5%E5%85%B7%E6%98%AF%E5%B9%B2%E4%BB%80%E4%B9%88%E7%9A%84">这个工具是干什么的</h2>
+<p>node-mongodb-es-connector是用来保持你的mongoDB collections和你的elasticsearch index之间的数据实时同步.它是用mongo oplog来监听你的mongdb数据是否发生变化,无论是增删改查它都会及时反映到你的elasticsearch index上.在使用本工具之前你必须保证你的mongoDB是符合replica结构的,如果不是请先正确设置之后再使用此工具.(支持附件同步)</p>
+<h2 id="%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8">如何使用</h2>
+<pre><code class="language-bash"><div>npm install es-mongodb-sync
+</div></code></pre>
+<p>或者从GitHub上去<a href="https://github.com/zhr85210078/node-mongodb-es-connector/tree/master">下载</a>.</p>
+<h2 id="%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90">简单的例子</h2>
+<p>创建在<strong>crawlerData</strong>文件目录下创建一个js文件,命名规则如下:
+<code>ElasticSearchIndexName.json</code>,或者任意名称<code>.json</code>..</p>
+<p>如果你需要更多的配置文件需要在<code>crawlerData</code>目录下创建.</p>
+<p>例子:</p>
+<p><code>mybooks.json</code></p>
+<pre><code class="language-bash"><div>{
+    <span class="hljs-string">"mongodb"</span>: {
+        <span class="hljs-string">"m_database"</span>: <span class="hljs-string">"myTest"</span>,
+        <span class="hljs-string">"m_collectionname"</span>: <span class="hljs-string">"books"</span>,
+        <span class="hljs-string">"m_filterfilds"</span>: {
+            <span class="hljs-string">"version"</span> : <span class="hljs-string">"2.0"</span>
+        },
+        <span class="hljs-string">"m_returnfilds"</span>: {
+            <span class="hljs-string">"bName"</span>: 1,
+            <span class="hljs-string">"bPrice"</span>: 1,
+            <span class="hljs-string">"bImgSrc"</span>: 1
+        },
+        <span class="hljs-string">"m_extendfilds"</span>: {
+            <span class="hljs-string">"bA"</span>: <span class="hljs-string">"this is a extend fild bA"</span>,
+            <span class="hljs-string">"bB"</span>: <span class="hljs-string">"this is a extend fild bB"</span>
+        },
+        <span class="hljs-string">"m_extendinit"</span>: {
+            <span class="hljs-string">"m_comparefild"</span>: <span class="hljs-string">"_id"</span>,
+            <span class="hljs-string">"m_comparefildType"</span>: <span class="hljs-string">"ObjectId"</span>,
+            <span class="hljs-string">"m_startFrom"</span>: <span class="hljs-string">"2018-07-20 13:44:00"</span>,
+            <span class="hljs-string">"m_endTo"</span>: <span class="hljs-string">"2018-07-20 13:46:59"</span>
+        },
+        <span class="hljs-string">"m_connection"</span>: {
+            <span class="hljs-string">"m_servers"</span>: [
+                <span class="hljs-string">"localhost:29031"</span>,
+                <span class="hljs-string">"localhost:29032"</span>,
+                <span class="hljs-string">"localhost:29033"</span>
+            ],
+            <span class="hljs-string">"m_authentication"</span>: {
+                <span class="hljs-string">"username"</span>: <span class="hljs-string">"UserAdmin"</span>,
+                <span class="hljs-string">"password"</span>: <span class="hljs-string">"pass1234"</span>,
+                <span class="hljs-string">"authsource"</span>:<span class="hljs-string">"admin"</span>,
+                <span class="hljs-string">"replicaset"</span>:<span class="hljs-string">"my_replica"</span>,
+                <span class="hljs-string">"ssl"</span>:<span class="hljs-literal">false</span>
+            }
+        },
+        <span class="hljs-string">"m_documentsinbatch"</span>: 5000,
+        <span class="hljs-string">"m_delaytime"</span>: 1000,
+        <span class="hljs-string">"max_attachment_size"</span>:5242880
+    },
+    <span class="hljs-string">"elasticsearch"</span>: {
+        <span class="hljs-string">"e_index"</span>: <span class="hljs-string">"mybooks"</span>,
+        <span class="hljs-string">"e_type"</span>: <span class="hljs-string">"books"</span>,
+        <span class="hljs-string">"e_connection"</span>: {
+            <span class="hljs-string">"e_server"</span>: <span class="hljs-string">"http://localhost1:9200,http://localhost2:9200,http://localhost3:9200"</span>,
+            <span class="hljs-string">"e_httpauth"</span>: {
+                <span class="hljs-string">"username"</span>: <span class="hljs-string">"EsAdmin"</span>,
+                <span class="hljs-string">"password"</span>: <span class="hljs-string">"pass1234"</span>
+            }
+        },
+        <span class="hljs-string">"e_pipeline"</span>: <span class="hljs-string">"mypipeline"</span>,
+        <span class="hljs-string">"e_iscontainattachment"</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-string">"refresh_interval"</span>: <span class="hljs-string">"30s"</span>,
+        <span class="hljs-string">"number_of_replicas"</span>: 0
+    }
+}
+</div></code></pre>
+<ul>
+<li><strong>m_database</strong> - MongoDB里需要监听的数据库. (<strong>必须</strong>)</li>
+<li><strong>m_collectionname</strong> - MongoDB里需要监听的collection. (<strong>必须</strong>)</li>
+<li><strong>m_filterfilds</strong> - MongoDB里的查询条件,目前支持一些简单的查询条件.(默认值为<code>null</code>). (<strong>必须</strong>)</li>
+<li><strong>m_returnfilds</strong> - MongoDB需要返回的字段.(默认值为<code>null</code>). (<strong>必须</strong>)</li>
+<li><strong>m_extendfilds</strong> - 不在MongoDB里存在的字段,但是需要存储到Elasticsearch的index里.(默认值为<code>null</code>). (<strong>可选</strong>)</li>
+<li><strong>m_extendinit</strong> - mongodb初始化补充配置.(默认值为<code>null</code>). (<strong>可选</strong>)
+<ul>
+<li><strong>m_comparefild</strong> - MongoDB需要比较的字段.(默认值为<code>_id</code>或者是其他字段). (<strong>可选</strong>)</li>
+<li><strong>m_comparefildType</strong> - MongoDB需要比较的字段的数据类型.(默认值为<code>ObjectId</code>或者是<code>DateTime</code>). (<strong>可选</strong>)</li>
+<li><strong>m_startFrom</strong> - 起始时间.(默认值是一个DateTime类型的字符串). (<strong>可选</strong>)</li>
+<li><strong>m_endTo</strong> - 截止时间.(默认值是一个DateTime类型的字符串). (<strong>可选</strong>)</li>
+</ul>
+</li>
+<li><strong>m_connection</strong> (<strong>必须</strong>)
+<ul>
+<li><strong>m_servers</strong> - MongoDB服务器的地址.(replica结构,数组格式). (<strong>必须</strong>)</li>
+<li><strong>m_authentication</strong> - 如果需要MongoDB的登录验证使用下面配置(默认值为<code>null</code>). (<strong>必须</strong>)
+<ul>
+<li><strong>username</strong> - MongoDB连接的用户名. (<strong>必须</strong>)</li>
+<li><strong>password</strong> - MongoDB连接的密码. (<strong>必须</strong>)</li>
+<li><strong>authsource</strong> - MongoDB用户认证,默认为<code>admin</code>. (<strong>必须</strong>)</li>
+<li><strong>replicaset</strong> - MongoDB的repliac结构的名字. (<strong>必须</strong>)</li>
+<li><strong>ssl</strong> - MongoDB的ssl.(默认值为<code>false</code>). (<strong>可选</strong>)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>m_url</strong> - 替换<code>m_connection</code>节点(二选一). (<strong>可选</strong>)</li>
+<li><strong>m_documentsinbatch</strong> - 一次性从mongodb往Elasticsearch里传入数据的条数. (你可以设置比较大的值,默认为1000). (<strong>必须</strong>)</li>
+<li><strong>m_delaytime</strong> - 每次进elasticsearch数据的间隔时间(默认值为<code>1000</code>ms). (<strong>必须</strong>)</li>
+<li><strong>max_attachment_size</strong> - 每个索引对应附件的最大字节数(默认值为<code>5242880</code>byte. (<strong>可选</strong>)</li>
+<li><strong>e_index</strong> - ElasticSearch里的index. (<strong>必须</strong>)</li>
+<li><strong>e_type</strong> - ElasticSearch里的type,这里的type主要为了使用bulk. (<strong>必须</strong>)</li>
+<li><strong>e_connection</strong> (<strong>必须</strong>)
+<ul>
+<li><strong>e_server</strong> - ElasticSearch的连接字符串. (<strong>必须</strong>)</li>
+<li><strong>e_httpauth</strong> - 如果ElasticSearch需要登录验证使用下面配置(默认值为<code>null</code>). (<strong>可选</strong>)
+<ul>
+<li><strong>username</strong> - ElasticSearch连接的用户名. (<strong>可选</strong>)</li>
+<li><strong>password</strong> - ElasticSearch连接的密码. (<strong>可选</strong>)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>e_pipeline</strong> - ElasticSearch 中pipeline的名称. (<strong>可选</strong>)</li>
+<li><strong>e_iscontainattachment</strong> - pipeline是否包含附件规则(默认值为<code>false</code>). (<strong>可选</strong>)</li>
+<li><strong>refresh_interval</strong> - ElasticSearch里的index刷新时间(默认值为<code>30s</code>). (<strong>可选</strong>)</li>
+<li><strong>number_of_replicas</strong> - ElasticSearch里的index副本(默认值为<code>0</code>). (<strong>可选</strong>)</li>
+</ul>
+<h2 id="%E5%A6%82%E4%BD%95%E5%90%AF%E5%8A%A8">如何启动</h2>
+<pre><code class="language-bash"><div>node app.js
+</div></code></pre>
+<p><img src="file:///c:\Users\Haoran Zhang\Documents\My\code\pwccode\node-mongodb-es-connector\test\img\start.gif" alt="start" title="start"></p>
+<h2 id="%E6%8B%93%E5%B1%95api">拓展API</h2>
+<p>index.js (只用来做配置文件的增删改查)</p>
+<p><a href="https://github.com/zhr85210078/es-connector-api">例子</a></p>
+<p><strong>1.start()</strong> - must start up before all the APIs.</p>
+<hr>
+<p><strong>2.addWatcher()</strong> - 增加一个配置文件.</p>
+<p>传参:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fileName</td>
+<td>string</td>
+</tr>
+<tr>
+<td>obj</td>
+<td>jsonObject</td>
+</tr>
+</tbody>
+</table>
+<p><em><strong>返回值: true or false</strong></em></p>
+<hr>
+<p><strong>3.updateWatcher()</strong> - 修改一个配置文件.</p>
+<p>传参:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fileName</td>
+<td>string</td>
+</tr>
+<tr>
+<td>obj</td>
+<td>jsonObject</td>
+</tr>
+</tbody>
+</table>
+<p><em><strong>返回值: true or false</strong></em></p>
+<hr>
+<p><strong>4.deleteWatcher()</strong> - 删除一个配置文件.</p>
+<p>传参:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fileName</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+<p><em><strong>返回值: true or false</strong></em></p>
+<hr>
+<p><strong>5.isExistWatcher()</strong> - 检查当前配置文件是否存在.</p>
+<p>传参:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fileName</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+<p><em><strong>返回值: true or false</strong></em></p>
+<hr>
+<p><strong>6.getInfoArray()</strong> - 获取每个配置文件的当前状态.(waiting/initialling/running/stoped).</p>
+<hr>
+<h2 id="%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97">更新日志</h2>
+<ul>
+<li><strong>v1.1.12</strong> - 更新promise插件并且在当前项目中使用bluebird插件,支持超过1000条索引的实时数据同步,使用promise的消息队列.</li>
+<li><strong>v2.0.0</strong> - 支持elasticsearch的pipeline,支持同步附件到elasticsearch.</li>
+<li><strong>v2.0.12</strong> - 增加监听配置文件当前同步的状态(<code>getInfoArray()</code>).</li>
+<li><strong>v2.0.18</strong> - 修改了日志目录.</li>
+<li><strong>v2.1.1</strong> - 修改了初始化方法 (先进主文档-&gt;后进附件).</li>
+<li><strong>v2.1.8</strong> - 使用promise队列 (在初始化操作和mongo-oplog触发事件).</li>
+<li><strong>v2.1.9</strong> - 增加了 <code>m_extendfilds</code>节点和 <code>m_extendinit</code>节点.</li>
+<li><strong>v2.1.16</strong> - 增加了监听mongodb断开连接的定时任务, 增加了重启服务根据时间戳初始化数据, 取消初始化全量同步.</li>
+<li><strong>v2.1.20</strong> - 支持elasticsearch集群的数据同步.</li>
+<li><strong>v2.1.21</strong> - 支持配置文件加密.</li>
+</ul>
+<h2 id="%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8elasticsearch%E7%9A%84pipeline">如何使用elasticsearch的pipeline</h2>
+<ul>
+<li>
+<p><strong>安装附件处理器插件</strong></p>
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/plugins/6.3/ingest-attachment.html">https://www.elastic.co/guide/en/elasticsearch/plugins/6.3/ingest-attachment.html</a></p>
+<p>更多关于 Elasticsearch Pipeline 相关的知识：
+<a href="https://www.felayman.com/articles/2017/11/24/1511527532643.html?utm_medium=hao.caibaojian.com&amp;utm_source=hao.caibaojian.com">https://www.felayman.com/articles/2017/11/24/1511527532643.html?utm_medium=hao.caibaojian.com&amp;utm_source=hao.caibaojian.com</a></p>
+</li>
+<li>
+<p><strong>准备在elasticsearch中创建一个pipeline</strong></p>
+</li>
+</ul>
+<pre><code class="language-bash"><div>PUT _ingest/pipeline/mypipeline
+{
+  <span class="hljs-string">"description"</span> : <span class="hljs-string">"Extract attachment information from arrays"</span>,
+  <span class="hljs-string">"processors"</span> : [
+    {
+      <span class="hljs-string">"foreach"</span>: {
+        <span class="hljs-string">"field"</span>: <span class="hljs-string">"attachments"</span>,
+        <span class="hljs-string">"processor"</span>: {
+          <span class="hljs-string">"attachment"</span>: {
+            <span class="hljs-string">"target_field"</span>: <span class="hljs-string">"_ingest._value.attachment"</span>,
+            <span class="hljs-string">"field"</span>: <span class="hljs-string">"_ingest._value.data"</span>
+          }
+        }
+      }
+    }
+  ]
+}
+</div></code></pre>
+<h2 id="%E6%98%BE%E7%A4%BA%E7%9A%84%E7%BB%93%E6%9E%9C">显示的结果</h2>
+<ul>
+<li><strong>mongodb里面的数据</strong></li>
+</ul>
+<p><img src="file:///c:\Users\Haoran Zhang\Documents\My\code\pwccode\node-mongodb-es-connector\test\img\mongoDB.jpg" alt="mongodb" title="mongodb"></p>
+<ul>
+<li><strong>elasticsearch里面的数据</strong></li>
+</ul>
+<p><img src="file:///c:\Users\Haoran Zhang\Documents\My\code\pwccode\node-mongodb-es-connector\test\img\elasticsearch.jpg" alt="elasticsearch" title="elasticsearch"></p>
+<h2 id="%E6%B5%8B%E8%AF%95">测试</h2>
+<p><img src="file:///c:\Users\Haoran Zhang\Documents\My\code\pwccode\node-mongodb-es-connector\test\img\test.gif" alt="test" title="test"></p>
+<h2 id="license">License</h2>
+<p>The MIT License (MIT). Please see <a href="LICENSE">LICENSE</a> for more information.</p>
+
+    </body>
+    </html>

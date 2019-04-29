@@ -92,7 +92,7 @@ For example:
         "e_pipeline": "mypipeline",
         "e_iscontainattachment": true,
         "refresh_interval":"30s",
-        "number_of_replicas": 1
+        "number_of_replicas": 0
     }
 }
 ```
@@ -129,7 +129,7 @@ For example:
 - **e_pipeline** - ElasticSearch pipeline name. (**selective**)
 - **e_iscontainattachment** - Is or not contain attachment the default value is `false`. (**selective**)
 - **refresh_interval** - Index refresh interval the default value is `30s`. (**selective**)
-- **number_of_replicas** - Index replicas the default value is `1`. (**selective**)
+- **number_of_replicas** - Index replicas the default value is `0`. (**selective**)
 
 ## Start up
 

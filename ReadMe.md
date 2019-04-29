@@ -92,7 +92,7 @@ For example:
         "e_pipeline": "mypipeline",
         "e_iscontainattachment": true,
         "refresh_interval": "30s",
-        "number_of_replicas": 1
+        "number_of_replicas": 0
     }
 }
 ```

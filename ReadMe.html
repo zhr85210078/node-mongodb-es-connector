@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+        <title>node-mongodb-es-connector</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.min.css" integrity="sha384-9eLZqc9ds8eNjO3TmqPeYcDj8n+Qfa4nuSiGYa6DjLNcv9BtN69ZIulL9+8CqC9Y" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+        <link href="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.css" rel="stylesheet" type="text/css">
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        
+        <script src="https://cdn.jsdelivr.net/npm/katex-copytex@latest/dist/katex-copytex.min.js"></script>
+    </head>
+    <body>
+        <h1 id="node-mongodb-es-connector">node-mongodb-es-connector</h1>
+<p>MongoDB and ElasticSearch sync module for node (support attachment sync)
+<img src="file:///c:\Users\Haoran Zhang\Documents\My\code\pwccode\node-mongodb-es-connector\test\img\structure.jpg" alt="structure" title="structure"></p>
+<p>Supports one-to-one and one-to-many relationships.</p>
+<p>Chinese Documentation - <a href="./README.zh-CN.md">中文文档</a></p>
+<ul>
+<li><strong>one-to-one</strong> - one mongodb collection to one elasticsearch index</li>
+<li><strong>one-to-many</strong> - one mongodb collection to one elasticsearch server many indexs, or one mongodb collection to many elasticsearch servers one index</li>
+</ul>
+<h2 id="my-current-version">my current version</h2>
+<pre><code>elasticsearch: v6.1.2
+mongodb: v3.6.2
+Nodejs: v8.9.3
+</code></pre>
+<h2 id="what-does-it-do">What does it do</h2>
+<p>node-mongodb-es-connector package keeps your mongoDB collections and elastic search cluster in sync. It does so by tailing the mongo oplog and replicate whatever crud operation into elastic search cluster without any overhead. Please note that a replica set is needed for the package to tail mongoDB.(support attentment sync)</p>
+<h2 id="how-to-use">How to use</h2>
+<pre><code class="language-bash"><div>npm install es-mongodb-sync
+</div></code></pre>
+<p>or <a href="https://github.com/zhr85210078/node-mongodb-es-connector/tree/master">Download</a> from GitHub.</p>
+<h2 id="sample-usage">Sample usage</h2>
+<p>Create a file in the <strong>crawlerData</strong> folder,the Naming rules is <code>ElasticSearchIndexName.json</code> or any name <code>.json</code>.</p>
+<p>If you have more additional configuration in the <code>crawlerData</code> folder.</p>
+<p>For example:</p>
+<p><code>mybooks.json</code></p>
+<pre><code class="language-bash"><div>{
+    <span class="hljs-string">"mongodb"</span>: {
+        <span class="hljs-string">"m_database"</span>: <span class="hljs-string">"myTest"</span>,
+        <span class="hljs-string">"m_collectionname"</span>: <span class="hljs-string">"books"</span>,
+        <span class="hljs-string">"m_filterfilds"</span>: {
+            <span class="hljs-string">"version"</span> : <span class="hljs-string">"2.0"</span>
+        },
+        <span class="hljs-string">"m_returnfilds"</span>: {
+            <span class="hljs-string">"bName"</span>: 1,
+            <span class="hljs-string">"bPrice"</span>: 1,
+            <span class="hljs-string">"bImgSrc"</span>: 1
+        },
+        <span class="hljs-string">"m_extendfilds"</span>: {
+            <span class="hljs-string">"bA"</span>: <span class="hljs-string">"this is a extend fild bA"</span>,
+            <span class="hljs-string">"bB"</span>: <span class="hljs-string">"this is a extend fild bB"</span>
+        },
+        <span class="hljs-string">"m_extendinit"</span>: {
+            <span class="hljs-string">"m_comparefild"</span>: <span class="hljs-string">"_id"</span>,
+            <span class="hljs-string">"m_comparefildType"</span>: <span class="hljs-string">"ObjectId"</span>,
+            <span class="hljs-string">"m_startFrom"</span>: <span class="hljs-string">"2018-07-20 13:44:00"</span>,
+            <span class="hljs-string">"m_endTo"</span>: <span class="hljs-string">"2018-07-20 13:46:59"</span>
+        },
+        <span class="hljs-string">"m_connection"</span>: {
+            <span class="hljs-string">"m_servers"</span>: [
+                <span class="hljs-string">"localhost:29031"</span>,
+                <span class="hljs-string">"localhost:29032"</span>,
+                <span class="hljs-string">"localhost:29033"</span>
+            ],
+            <span class="hljs-string">"m_authentication"</span>: {
+                <span class="hljs-string">"username"</span>: <span class="hljs-string">"UserAdmin"</span>,
+                <span class="hljs-string">"password"</span>: <span class="hljs-string">"pass1234"</span>,
+                <span class="hljs-string">"authsource"</span>:<span class="hljs-string">"admin"</span>,
+                <span class="hljs-string">"replicaset"</span>:<span class="hljs-string">"my_replica"</span>,
+                <span class="hljs-string">"ssl"</span>:<span class="hljs-literal">false</span>
+            }
+        },
+        <span class="hljs-string">"m_documentsinbatch"</span>: 5000,
+        <span class="hljs-string">"m_delaytime"</span>: 1000,
+        <span class="hljs-string">"max_attachment_size"</span>:5242880
+    },
+    <span class="hljs-string">"elasticsearch"</span>: {
+        <span class="hljs-string">"e_index"</span>: <span class="hljs-string">"mybooks"</span>,
+        <span class="hljs-string">"e_type"</span>: <span class="hljs-string">"books"</span>,
+        <span class="hljs-string">"e_connection"</span>: {
+            <span class="hljs-string">"e_server"</span>: <span class="hljs-string">"http://localhost1:9200,http://localhost2:9200,http://localhost3:9200"</span>,
+            <span class="hljs-string">"e_httpauth"</span>: {
+                <span class="hljs-string">"username"</span>: <span class="hljs-string">"EsAdmin"</span>,
+                <span class="hljs-string">"password"</span>: <span class="hljs-string">"pass1234"</span>
+            }
+        },
+        <span class="hljs-string">"e_pipeline"</span>: <span class="hljs-string">"mypipeline"</span>,
+        <span class="hljs-string">"e_iscontainattachment"</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-string">"refresh_interval"</span>: <span class="hljs-string">"30s"</span>,
+        <span class="hljs-string">"number_of_replicas"</span>: 0
+    }
+}
+</div></code></pre>
+<ul>
+<li><strong>m_database</strong> - MongoDB dataBase to watch. (<strong>required</strong>)</li>
+<li><strong>m_collectionname</strong> - MongoDB collection to watch. (<strong>required</strong>)</li>
+<li><strong>m_filterfilds</strong> - MongoDB filterQuery,support simple filter.(Default value is <code>null</code>). (<strong>required</strong>)</li>
+<li><strong>m_returnfilds</strong> - MongoDB need to return to the field.(Default value is <code>null</code>). (<strong>required</strong>)</li>
+<li><strong>m_extendfilds</strong> - MongoDB expand field.(can default key and value). (<strong>selective</strong>)</li>
+<li><strong>m_extendinit</strong> - Mongodb initialization supplemental configuration. (Default value is <code>null</code>). (<strong>selective</strong>)
+<ul>
+<li><strong>m_comparefild</strong> - MongoDB compare fild.(Default value is <code>_id</code> or other). (<strong>selective</strong>)</li>
+<li><strong>m_comparefildType</strong> - MongoDB compare fild type.(Default value is <code>ObjectId</code> or <code>DateTime</code>). (<strong>selective</strong>)</li>
+<li><strong>m_startFrom</strong> - StartTime.(Default value is a DateTime). (<strong>selective</strong>)</li>
+<li><strong>m_endTo</strong> - EndTime.(Default value is a DateTime). (<strong>selective</strong>)</li>
+</ul>
+</li>
+<li><strong>m_connection</strong> (<strong>required</strong>)
+<ul>
+<li><strong>m_servers</strong> - MongoDB servers.(Array). (<strong>required</strong>)</li>
+<li><strong>m_authentication</strong> - If you do not need to verify the default value is <code>null</code>. (<strong>required</strong>)
+<ul>
+<li><strong>username</strong> - MongoDB connection userName. (<strong>required</strong>)</li>
+<li><strong>password</strong> - MongoDB connection passWord. (<strong>required</strong>)</li>
+<li><strong>authsource</strong> - MongoDB user authentication. (<strong>required</strong>)</li>
+<li><strong>replicaset</strong> - MongoDB replicaSet name. (<strong>required</strong>)</li>
+<li><strong>ssl</strong> - MongoDB ssl.(Default value is <code>false</code>). (<strong>selective</strong>)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>m_url</strong> - replace <code>m_connection</code>(Either-or) (<strong>selective</strong>).</li>
+<li><strong>m_documentsinbatch</strong> - An integer that specifies number of documents to send to ElasticSearch in batches (can be set to very high number). (<strong>required</strong>)</li>
+<li><strong>m_delaytime</strong> - Number of milliseconds between batches the default value is <code>1000</code>ms. (<strong>required</strong>)</li>
+<li><strong>max_attachment_size</strong> - Attachment max size the default value is <code>5242880</code>byte. (<strong>selective</strong>)</li>
+<li><strong>e_index</strong> - ElasticSearch index where documents from watcher collection is saved. (<strong>required</strong>)</li>
+<li><strong>e_type</strong> - ElasticSearch type given to documents from watcher collection. (<strong>required</strong>)</li>
+<li><strong>e_connection</strong> (<strong>required</strong>)
+<ul>
+<li><strong>e_server</strong> - URL to a running ElasticSearch cluster. (<strong>required</strong>)</li>
+<li><strong>e_httpauth</strong> - If you do not need to verify the default value is <code>null</code>. (<strong>selective</strong>)
+<ul>
+<li><strong>username</strong> - ElasticSearch connection userName. (<strong>selective</strong>)</li>
+<li><strong>password</strong> - ElasticSearch connection passWord. (<strong>selective</strong>)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>e_pipeline</strong> - ElasticSearch pipeline name. (<strong>selective</strong>)</li>
+<li><strong>e_iscontainattachment</strong> - Is or not contain attachment the default value is <code>false</code>. (<strong>selective</strong>)</li>
+<li><strong>refresh_interval</strong> - Index refresh interval the default value is <code>30s</code>. (<strong>selective</strong>)</li>
+<li><strong>number_of_replicas</strong> - Index replicas the default value is <code>1</code>. (<strong>selective</strong>)</li>
+</ul>
+<h2 id="start-up">Start up</h2>
+<pre><code class="language-bash"><div>node app.js
+</div></code></pre>
+<p><img src="file:///c:\Users\Haoran Zhang\Documents\My\code\pwccode\node-mongodb-es-connector\test\img\start.gif" alt="start" title="start"></p>
+<h2 id="extra-apis">Extra APIs</h2>
+<p>index.js (only crud config json )</p>
+<p><a href="https://github.com/zhr85210078/es-connector-api">Example</a></p>
+<p><strong>1.start()</strong> - must start up before all the APIs.</p>
+<hr>
+<p><strong>2.addWatcher()</strong> - add a config json.</p>
+<p>Parameters:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fileName</td>
+<td>string</td>
+</tr>
+<tr>
+<td>obj</td>
+<td>jsonObject</td>
+</tr>
+</tbody>
+</table>
+<p><em><strong>return: true or false</strong></em></p>
+<hr>
+<p><strong>3.updateWatcher()</strong> - update a config json.</p>
+<p>Parameters:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fileName</td>
+<td>string</td>
+</tr>
+<tr>
+<td>obj</td>
+<td>jsonObject</td>
+</tr>
+</tbody>
+</table>
+<p><em><strong>return: true or false</strong></em></p>
+<hr>
+<p><strong>4.deleteWatcher()</strong> - delete a config json.</p>
+<p>Parameters:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fileName</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+<p><em><strong>return: true or false</strong></em></p>
+<hr>
+<p><strong>5.isExistWatcher()</strong> - check out this config json exist.</p>
+<p>Parameters:</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>fileName</td>
+<td>string</td>
+</tr>
+</tbody>
+</table>
+<p><em><strong>return: true or false</strong></em></p>
+<hr>
+<p><strong>6.getInfoArray()</strong> - get every config status.(waiting/initialling/running/stoped).</p>
+<hr>
+<h2 id="changelog">ChangeLog</h2>
+<ul>
+<li><strong>v1.1.12</strong> - update promise plugin,and referencing the Bluebird plugin in the project.Real-time synchronization in support of more than 1000 indexes.Message queues using promise.</li>
+<li><strong>v2.0.0</strong> - support elasticsearch pipeline aggregations and attachment into elasticsearch.</li>
+<li><strong>v2.0.12</strong> - add watch config file sync status(<code>getInfoArray()</code>).</li>
+<li><strong>v2.0.18</strong> - update logs directory.</li>
+<li><strong>v2.1.1</strong> - update init method (master doc-&gt;attachment).</li>
+<li><strong>v2.1.8</strong> - use promise queue (init and mongo-oplog).</li>
+<li><strong>v2.1.9</strong> - add <code>m_extendfilds</code> and <code>m_extendinit</code>.</li>
+<li><strong>v2.1.16</strong> - add timed task about watch mongodb, add timestamp for init data, cancel full data synchronization in init.</li>
+<li><strong>v2.1.20</strong> - support elasticsearch cluster synchronization.</li>
+<li><strong>v2.1.21</strong> - support configuration file encryption.</li>
+</ul>
+<h2 id="how-to-use-pipeline">How to use pipeline</h2>
+<ul>
+<li>
+<p><strong>Install Ingest Attachment Processor Plugin</strong></p>
+<p><a href="https://www.elastic.co/guide/en/elasticsearch/plugins/6.3/ingest-attachment.html">https://www.elastic.co/guide/en/elasticsearch/plugins/6.3/ingest-attachment.html</a></p>
+<p>more Elasticsearch Pipeline knowledge：
+<a href="https://www.felayman.com/articles/2017/11/24/1511527532643.html?utm_medium=hao.caibaojian.com&amp;utm_source=hao.caibaojian.com">https://www.felayman.com/articles/2017/11/24/1511527532643.html?utm_medium=hao.caibaojian.com&amp;utm_source=hao.caibaojian.com</a></p>
+</li>
+<li>
+<p><strong>prepare make a pipeline in elasticsearch</strong></p>
+</li>
+</ul>
+<pre><code class="language-bash"><div>PUT _ingest/pipeline/mypipeline
+{
+  <span class="hljs-string">"description"</span> : <span class="hljs-string">"Extract attachment information from arrays"</span>,
+  <span class="hljs-string">"processors"</span> : [
+    {
+      <span class="hljs-string">"foreach"</span>: {
+        <span class="hljs-string">"field"</span>: <span class="hljs-string">"attachments"</span>,
+        <span class="hljs-string">"processor"</span>: {
+          <span class="hljs-string">"attachment"</span>: {
+            <span class="hljs-string">"target_field"</span>: <span class="hljs-string">"_ingest._value.attachment"</span>,
+            <span class="hljs-string">"field"</span>: <span class="hljs-string">"_ingest._value.data"</span>
+          }
+        }
+      }
+    }
+  ]
+}
+</div></code></pre>
+<h2 id="result">Result</h2>
+<ul>
+<li><strong>mongodbData</strong></li>
+</ul>
+<p><img src="file:///c:\Users\Haoran Zhang\Documents\My\code\pwccode\node-mongodb-es-connector\test\img\mongoDB.jpg" alt="mongodb" title="mongodb"></p>
+<ul>
+<li><strong>elasticsearch</strong></li>
+</ul>
+<p><img src="file:///c:\Users\Haoran Zhang\Documents\My\code\pwccode\node-mongodb-es-connector\test\img\elasticsearch.jpg" alt="elasticsearch" title="elasticsearch"></p>
+<h2 id="test">Test</h2>
+<p><img src="file:///c:\Users\Haoran Zhang\Documents\My\code\pwccode\node-mongodb-es-connector\test\img\test.gif" alt="test" title="test"></p>
+<h2 id="license">License</h2>
+<p>The MIT License (MIT). Please see <a href="LICENSE">LICENSE</a> for more information.</p>
+
+    </body>
+    </html>

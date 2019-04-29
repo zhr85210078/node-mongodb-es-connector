@@ -93,7 +93,7 @@ npm install es-mongodb-sync
         "e_pipeline": "mypipeline",
         "e_iscontainattachment": true,
         "refresh_interval": "30s",
-        "number_of_replicas": 1
+        "number_of_replicas": 0
     }
 }
 ```
@@ -129,8 +129,8 @@ npm install es-mongodb-sync
     - **password** - ElasticSearch连接的密码. (**可选**)
 - **e_pipeline** - ElasticSearch 中pipeline的名称. (**可选**)
 - **e_iscontainattachment** - pipeline是否包含附件规则(默认值为`false`). (**可选**)
-- **refresh_interval** - ElasticSearch里的index刷新时间(默认值为`30s`). (**selective**)
-- **number_of_replicas** - ElasticSearch里的index副本(默认值为`1`). (**selective**)
+- **refresh_interval** - ElasticSearch里的index刷新时间(默认值为`30s`). (**可选**)
+- **number_of_replicas** - ElasticSearch里的index副本(默认值为`0`). (**可选**)
 
 ## 如何启动
 
