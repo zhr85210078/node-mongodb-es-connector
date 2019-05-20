@@ -52,7 +52,7 @@ var addWatcher = function (fileName, obj, isAse) {
             item.cluster = obj.elasticsearch.e_connection.e_server;
             item.index = obj.elasticsearch.e_index;
             item.msg = "";
-            item.status = "w";
+            item.status = "W";
             global.infoArray.push(item);
         }
         flag = true;
@@ -94,7 +94,7 @@ var updateWatcher = function (fileName, obj, isAse) {
             item.cluster = obj.elasticsearch.e_connection.e_server;
             item.index = obj.elasticsearch.e_index;
             item.msg = "";
-            item.status = "w";
+            item.status = "W";
             global.infoArray.push(item);
         }
         flag = true;
