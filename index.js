@@ -2,7 +2,7 @@
  * @Author: horan 
  * @Date: 2017-07-09 10:24:53 
  * @Last Modified by: horan
- * @Last Modified time: 2019-03-13 10:28:17
+ * @Last Modified time: 2019-05-21 18:36:33
  * @Api
  */
 
@@ -35,6 +35,20 @@ var addWatcher = function (fileName, obj, isAse) {
         if (fs.existsSync(path.join(filePath, fileName + '.timestamp'))) {
             fs.unlinkSync(path.join(filePath, fileName + '.timestamp'));
         }
+
+        logger.logMethod('info',
+            '',
+            '',
+            '******************************Add config file******************************');
+        logger.logMethod('info',
+            '',
+            '',
+            'File added: ' + fileName + '.json');
+        var currentFile = {};
+        currentFile.Filename = fileName + '.json';
+        currentFile.Content = JSON.parse(fs.readFileSync(path.join(filePath, fileName + '.json')));
+        main.singlePipe(currentFile, filePath);
+
         var existInfo = false;
         if (global.infoArray && global.infoArray.length > 0) {
             _.find(global.infoArray, function (file) {
@@ -77,6 +91,20 @@ var updateWatcher = function (fileName, obj, isAse) {
         if (fs.existsSync(path.join(filePath, fileName + '.timestamp'))) {
             fs.unlinkSync(path.join(filePath, fileName + '.timestamp'));
         }
+
+        logger.logMethod('info',
+            '',
+            '',
+            '******************************update config file******************************');
+        logger.logMethod('info',
+            '',
+            '',
+            'File changed: ' + fileName + '.json');
+        var currentFile = {};
+        currentFile.Filename = fileName + '.json';
+        currentFile.Content = JSON.parse(fs.readFileSync(path.join(filePath, fileName + '.json')));
+        require("../main.js").singlePipe(currentFile, filePath);
+
         var existInfo = false;
         if (global.infoArray && global.infoArray.length > 0) {
             _.find(global.infoArray, function (file) {
@@ -128,6 +156,16 @@ var deleteWatcher = function (fileName) {
             if (fs.existsSync(path.join(filePath, fileName + '.timestamp'))) {
                 fs.unlinkSync(path.join(filePath, fileName + '.timestamp'));
             }
+
+            logger.logMethod('info',
+                '',
+                '',
+                '******************************Delete config file******************************');
+            logger.logMethod('info',
+                '',
+                '',
+                'File deleted: ' + fileName + '.json');
+
             flag = true;
             return flag;
         }
