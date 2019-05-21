@@ -128,8 +128,6 @@ For example:
     - **password** - ElasticSearch connection passWord. (**selective**)
 - **e_pipeline** - ElasticSearch pipeline name. (**selective**)
 - **e_iscontainattachment** - Is or not contain attachment the default value is `false`. (**selective**)
-- **refresh_interval** - Index refresh interval the default value is `30s`. (**selective**)
-- **number_of_replicas** - Index replicas the default value is `1`. (**selective**)
 
 ## Start up
 
