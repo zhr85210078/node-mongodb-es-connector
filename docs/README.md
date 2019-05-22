@@ -90,9 +90,7 @@ For example:
             }
         },
         "e_pipeline": "mypipeline",
-        "e_iscontainattachment": true,
-        "refresh_interval":"30s",
-        "number_of_replicas": 0
+        "e_iscontainattachment": true
     }
 }
 ```

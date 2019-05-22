@@ -2,7 +2,7 @@
  * @Author: horan 
  * @Date: 2017-07-09 10:24:53 
  * @Last Modified by: horan
- * @Last Modified time: 2019-05-21 18:36:33
+ * @Last Modified time: 2019-05-22 10:38:48
  * @Api
  */
 
@@ -103,7 +103,7 @@ var updateWatcher = function (fileName, obj, isAse) {
         var currentFile = {};
         currentFile.Filename = fileName + '.json';
         currentFile.Content = JSON.parse(fs.readFileSync(path.join(filePath, fileName + '.json')));
-        require("../main.js").singlePipe(currentFile, filePath);
+        main.singlePipe(currentFile, filePath);
 
         var existInfo = false;
         if (global.infoArray && global.infoArray.length > 0) {
