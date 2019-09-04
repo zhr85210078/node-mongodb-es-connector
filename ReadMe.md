@@ -219,7 +219,7 @@ Parameters:
     https://www.elastic.co/guide/en/elasticsearch/plugins/6.3/ingest-attachment.html
 
     more Elasticsearch Pipeline knowledge：
-    https://www.felayman.com/articles/2017/11/24/1511527532643.html?utm_medium=hao.caibaojian.com&utm_source=hao.caibaojian.com
+    https://hacpai.com/article/1512990272091
 
 - **prepare make a pipeline in elasticsearch**
 

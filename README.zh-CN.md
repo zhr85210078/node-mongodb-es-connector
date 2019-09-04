@@ -220,7 +220,7 @@ index.js (只用来做配置文件的增删改查)
     https://www.elastic.co/guide/en/elasticsearch/plugins/6.3/ingest-attachment.html
 
     更多关于 Elasticsearch Pipeline 相关的知识：
-    https://www.felayman.com/articles/2017/11/24/1511527532643.html?utm_medium=hao.caibaojian.com&utm_source=hao.caibaojian.com
+    https://hacpai.com/article/1512990272091
 
 - **准备在elasticsearch中创建一个pipeline**
 
