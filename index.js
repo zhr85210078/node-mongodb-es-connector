@@ -2,7 +2,7 @@
  * @Author: horan 
  * @Date: 2017-07-09 10:24:53 
  * @Last Modified by: horan
- * @Last Modified time: 2019-05-22 10:38:48
+ * @Last Modified time: 2019-09-29 14:06:50
  * @Api
  */
 
@@ -75,7 +75,7 @@ var addWatcher = function (fileName, obj, isAse) {
         logger.logMethod('error',
             obj.elasticsearch.e_connection.e_server,
             obj.elasticsearch.e_index,
-            'AddWatcher error: ' + error);
+            'AddWatcher error: ' + JSON.stringify(error).substring(0,200));
     }
 };
 
@@ -131,7 +131,7 @@ var updateWatcher = function (fileName, obj, isAse) {
         logger.logMethod('error',
             obj.elasticsearch.e_connection.e_server,
             obj.elasticsearch.e_index,
-            'UpdateWatcher error: ' + error);
+            'UpdateWatcher error: ' + JSON.stringify(error).substring(0,200));
     }
 };
 
@@ -174,7 +174,7 @@ var deleteWatcher = function (fileName) {
         logger.logMethod('error',
             '',
             '',
-            'DeleteWatcher error: ' + error);
+            'DeleteWatcher error: ' + JSON.stringify(error).substring(0,200));
     }
 };
 
@@ -189,7 +189,7 @@ var isExistWatcher = function (fileName) {
         logger.logMethod('error',
             '',
             '',
-            'IsExistWatcher error: ' + error);
+            'IsExistWatcher error: ' + JSON.stringify(error).substring(0,200));
     }
 };
 
