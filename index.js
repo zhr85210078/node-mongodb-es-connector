@@ -2,7 +2,7 @@
  * @Author: horan 
  * @Date: 2017-07-09 10:24:53 
  * @Last Modified by: horan
- * @Last Modified time: 2019-09-29 14:06:50
+ * @Last Modified time: 2019-10-22 15:41:23
  * @Api
  */
 
@@ -14,11 +14,11 @@ var appRoot = require('app-root-path');
 var logger = require('./lib/util/logger.js');
 var main = require('./lib/main');
 var ase = require("./lib/util/ase");
+var util = require('./lib/util/util');
 var filePath = path.join(appRoot.path, "crawlerData");
 
 var start = function () {
-    var getFileList = require('./lib/util/util').readFileList(filePath, [], ".json");
-    require('./lib/util/util').createInfoArray(getFileList);
+    var getFileList = util.readFileList(filePath, [], ".json");
     main.init(getFileList, filePath);
 };
 
@@ -47,35 +47,16 @@ var addWatcher = function (fileName, obj, isAse) {
         var currentFile = {};
         currentFile.Filename = fileName + '.json';
         currentFile.Content = JSON.parse(fs.readFileSync(path.join(filePath, fileName + '.json')));
+        util.updateInfoArray(obj.elasticsearch.e_connection.e_server, obj.elasticsearch.e_index, '', 'I');
         main.singlePipe(currentFile, filePath);
-
-        var existInfo = false;
-        if (global.infoArray && global.infoArray.length > 0) {
-            _.find(global.infoArray, function (file) {
-                if (file.cluster === obj.elasticsearch.e_connection.e_server &&
-                    file.index === obj.elasticsearch.e_index) {
-                    existInfo = true;
-                    return;
-                }
-            });
-        } else {
-            global.infoArray = [];
-        }
-        if (!existInfo) {
-            var item = {};
-            item.cluster = obj.elasticsearch.e_connection.e_server;
-            item.index = obj.elasticsearch.e_index;
-            item.msg = "";
-            item.status = "W";
-            global.infoArray.push(item);
-        }
         flag = true;
         return flag;
     } catch (error) {
         logger.logMethod('error',
             obj.elasticsearch.e_connection.e_server,
             obj.elasticsearch.e_index,
-            'AddWatcher error: ' + JSON.stringify(error).substring(0,200));
+            'AddWatcher error: ' + JSON.stringify(error).substring(0, 200));
+        return false;
     }
 };
 
@@ -103,35 +84,16 @@ var updateWatcher = function (fileName, obj, isAse) {
         var currentFile = {};
         currentFile.Filename = fileName + '.json';
         currentFile.Content = JSON.parse(fs.readFileSync(path.join(filePath, fileName + '.json')));
+        util.updateInfoArray(obj.elasticsearch.e_connection.e_server, obj.elasticsearch.e_index, '', 'I');
         main.singlePipe(currentFile, filePath);
-
-        var existInfo = false;
-        if (global.infoArray && global.infoArray.length > 0) {
-            _.find(global.infoArray, function (file) {
-                if (file.cluster === obj.elasticsearch.e_connection.e_server &&
-                    file.index === obj.elasticsearch.e_index) {
-                    existInfo = true;
-                    return;
-                }
-            });
-        } else {
-            global.infoArray = [];
-        }
-        if (!existInfo) {
-            var item = {};
-            item.cluster = obj.elasticsearch.e_connection.e_server;
-            item.index = obj.elasticsearch.e_index;
-            item.msg = "";
-            item.status = "W";
-            global.infoArray.push(item);
-        }
         flag = true;
         return flag;
     } catch (error) {
         logger.logMethod('error',
             obj.elasticsearch.e_connection.e_server,
             obj.elasticsearch.e_index,
-            'UpdateWatcher error: ' + JSON.stringify(error).substring(0,200));
+            'UpdateWatcher error: ' + JSON.stringify(error).substring(0, 200));
+        return false;
     }
 };
 
@@ -174,7 +136,7 @@ var deleteWatcher = function (fileName) {
         logger.logMethod('error',
             '',
             '',
-            'DeleteWatcher error: ' + JSON.stringify(error).substring(0,200));
+            'DeleteWatcher error: ' + JSON.stringify(error).substring(0, 200));
     }
 };
 
@@ -189,7 +151,7 @@ var isExistWatcher = function (fileName) {
         logger.logMethod('error',
             '',
             '',
-            'IsExistWatcher error: ' + JSON.stringify(error).substring(0,200));
+            'IsExistWatcher error: ' + JSON.stringify(error).substring(0, 200));
     }
 };
 
